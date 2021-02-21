@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
         // Window to be opened up when app launched
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = ViewController()
+        window.rootViewController = TabBarViewController()
         window.makeKeyAndVisible()
         self.window = window
         
