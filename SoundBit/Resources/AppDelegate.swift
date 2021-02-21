@@ -17,7 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
         // Window to be opened up when app launched
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = TabBarViewController()
+        
+        if AuthManager.shared.isSignedIn {
+            window.rootViewController = TabBarViewController()
+        }
+        else {
+            window.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+        }
+        
         window.makeKeyAndVisible()
         self.window = window
         
