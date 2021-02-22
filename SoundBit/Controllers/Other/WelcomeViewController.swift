@@ -41,9 +41,21 @@ class WelcomeViewController: UIViewController {
     @objc func didTapSignIn() {
         // When tapped we're going to create an instance of th e view controller
         let vc = AuthViewController()
+        vc.completionHandler = { success in
+            DispatchQueue.main.async {
+                self.handleSignIn(success: success)
+            }
+        }
+        
         vc.navigationItem.largeTitleDisplayMode = .never
         // Here we push the viewcontroller onto the screen
         navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    private func handleSignIn(success: Bool) {
+        // Here the user is Logged In
+        
         
     }
     

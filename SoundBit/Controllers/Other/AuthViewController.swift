@@ -20,6 +20,9 @@ class AuthViewController: UIViewController, WKNavigationDelegate {
         return webView
         
     }()
+    
+    // Here letting the WelcomeViewController the user has signed in successfully
+    public var completionHandler: ((Bool) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,11 @@ class AuthViewController: UIViewController, WKNavigationDelegate {
         // shows when the page get loaded
         webView.navigationDelegate = self
         view.addSubview(webView)
+        guard let url = AuthManager.shared.signInURL else {
+            return
+        }
+        
+        webView.load(URLRequest(url: url))
                 
     }
     
