@@ -30,24 +30,30 @@ final class AuthManager {
     }
     
     var isSignedIn: Bool {
-        
-        return false
+        return accessToken != nil
     }
     
     private var accessToken: String? {
-        return nil
+        return UserDefaults.standard.string(forKey: "access_token")
     }
     
     private var refreshToken: String? {
-        return nil
+        return UserDefaults.standard.string(forKey: "refresh_token")
     }
     
     private var tokenExpirationDate: Date? {
-        return nil
+        return UserDefaults.standard.object(forKey: "expirationDate") as? Date
     }
     
     private var shouldrefreshToken: Bool? {
-        return false
+        guard let expirationDate = tokenExpirationDate else {
+            // If expirationDate in nil return false
+            return false
+            
+        }
+        let currentDate = Date()
+        let fiveMinutes: TimeInterval = 300
+        return currentDate.addingTimeInterval(fiveMinutes) >= expirationDate
     }
     
     public func exchangeCodeForToken(
@@ -64,13 +70,14 @@ final class AuthManager {
         var components = URLComponents()
         components.queryItems = [
             URLQueryItem(name: "grant_type", value: "authorization_code"),
-            URLQueryItem(name: "code", value: "code"),
+            URLQueryItem(name: "code", value: code),
             URLQueryItem(name: "redirect_uri", value: "https://www.iosacademy.io"),
             
         ]
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         request.httpBody = components.query?.data(using: .utf8)
@@ -85,20 +92,17 @@ final class AuthManager {
         }
         request.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard let data = data,
                   error == nil else {
                 // If something goes wrong here
                 completion(false)
-                
                 return
             }
             
             do {
-                let json = try JSONSerialization.jsonObject(
-                    with: data, options: .allowFragments)
-                
-                print("SUCCESS: \(json)")
+                let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                self?.cacheToken(result: result)
                 completion(true)
             }
             
@@ -117,7 +121,11 @@ final class AuthManager {
     }
     
     // Here we cache token
-    private func cacheToken() {
+    private func cacheToken(result: AuthResponse) {
+        UserDefaults.standard.setValue(result.access_token, forKey: "access_token")
+        UserDefaults.standard.setValue(result.refresh_token, forKey: "refresh_token")
+        UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: "expirationDate")
+        
         
     }
 }

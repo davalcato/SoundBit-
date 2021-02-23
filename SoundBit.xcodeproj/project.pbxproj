@@ -35,6 +35,7 @@
 		75F22B4925E2049E00E384B7 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F22B4825E2049E00E384B7 /* Artist.swift */; };
 		75F22B4B25E204B600E384B7 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F22B4A25E204B600E384B7 /* UserProfile.swift */; };
 		75F22B4D25E31FE800E384B7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F22B4C25E31FE700E384B7 /* Extensions.swift */; };
+		75F22B4F25E4A25200E384B7 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F22B4E25E4A25100E384B7 /* AuthResponse.swift */; };
 		A405A2F2EB45D6AD206360B4 /* Pods_SoundBitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1EBA4185B10B18F8F1D932 /* Pods_SoundBitTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,7 @@
 		75F22B4825E2049E00E384B7 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		75F22B4A25E204B600E384B7 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		75F22B4C25E31FE700E384B7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		75F22B4E25E4A25100E384B7 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		8195C63AD2D0A01287F2493A /* Pods-SoundBitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundBitTests.debug.xcconfig"; path = "Target Support Files/Pods-SoundBitTests/Pods-SoundBitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8F634F11FA67ECCA86AE6D11 /* Pods-SoundBit-SoundBitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundBit-SoundBitUITests.release.xcconfig"; path = "Target Support Files/Pods-SoundBit-SoundBitUITests/Pods-SoundBit-SoundBitUITests.release.xcconfig"; sourceTree = "<group>"; };
 		94879E8B4ABD63A62425EEA2 /* Pods-SoundBit-SoundBitUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundBit-SoundBitUITests.debug.xcconfig"; path = "Target Support Files/Pods-SoundBit-SoundBitUITests/Pods-SoundBit-SoundBitUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				75F22B4625E2048300E384B7 /* AudioTrack.swift */,
 				75F22B4825E2049E00E384B7 /* Artist.swift */,
 				75F22B4A25E204B600E384B7 /* UserProfile.swift */,
+				75F22B4E25E4A25100E384B7 /* AuthResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				75F22B3525E2028900E384B7 /* ProfileViewController.swift in Sources */,
 				75F22B2725E200FE00E384B7 /* TabBarViewController.swift in Sources */,
 				75F22B4325E2041300E384B7 /* HapticsManager.swift in Sources */,
+				75F22B4F25E4A25200E384B7 /* AuthResponse.swift in Sources */,
 				75F22B4725E2048300E384B7 /* AudioTrack.swift in Sources */,
 				75CC201125E1F427001D9242 /* HomeViewController.swift in Sources */,
 				75F22B2F25E2021D00E384B7 /* AuthViewController.swift in Sources */,
