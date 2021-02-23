@@ -29,6 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window.makeKeyAndVisible()
         self.window = window
+        // Once the app launches
+        AuthManager.shared.refreshIfNeeded { success in
+            print(success)
+        }
     
         return true
     }
