@@ -6,3 +6,27 @@
 //
 
 import Foundation
+// Class responsible for making all the API calls
+final class APICaller {
+    static let shared = APICaller()
+    
+    private init() {}
+    
+    public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
+        
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+

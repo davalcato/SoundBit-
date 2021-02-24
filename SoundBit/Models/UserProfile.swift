@@ -6,3 +6,20 @@
 //
 
 import Foundation
+
+struct UserProfile {
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
