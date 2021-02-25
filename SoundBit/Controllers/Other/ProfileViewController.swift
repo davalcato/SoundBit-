@@ -7,24 +7,55 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    // Creating a tableView here
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.isHidden = true
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        return tableView
+    }()
+    
+    private var models = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Calling the API here
         title = "Profile"
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
         fetchProfile()
         view.backgroundColor = .systemBackground
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+    
     private func fetchProfile() {
             APICaller.shared.getCurrentUserProfile { [weak self] result in
                 DispatchQueue.main.async {
-                    self?.failedToGetProfile()
+                    switch result {
+                    case .success(let model):
+                        self?.updateUI(with: model)
+                    case .failure(let error):
+                        print("Profile Error")
+                        self?.failedToGetProfile()
+                }
             }
         }
     }
-    private func updateUI(with: UserProfile) {
-        
+    private func updateUI(with model: UserProfile) {
+        tableView.isHidden = false
+        // Configure table models
+        models.append("Full Name: \(model.display_name)")
+        models.append("Email Address: \(model.email)")
+        models.append("User ID: \(model.id)")
+        models.append("Plan: \(model.product)")
+        tableView.reloadData()
         
     }
     private func failedToGetProfile() {
@@ -34,5 +65,19 @@ class ProfileViewController: UIViewController {
         label.textColor = .secondaryLabel
         view.addSubview(label)
         label.center = view.center
+    }
+    
+    // MARK: - TableView
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return models.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = models[indexPath.row]
+        cell.selectionStyle = .none
+        return cell
+        
     }
 }
