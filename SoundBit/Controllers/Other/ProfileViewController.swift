@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SDWebImage
+
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -55,9 +57,37 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         models.append("Email Address: \(model.email)")
         models.append("User ID: \(model.id)")
         models.append("Plan: \(model.product)")
+        // Getting the URL image here
+        createTableHeader(with: model.images.first?.url)
         tableView.reloadData()
         
     }
+    
+    private func createTableHeader(with string: String?) {
+        guard let urlString = string, let url = URL(string: urlString) else {
+            return
+        }
+        // Create table header here
+        let headerView = UIView(frame: CGRect(x: 0,
+                                              y: 0,
+                                              width: view.width,
+                                              height: view.width/1.5))
+        
+        // Added the URL image here
+        let imageSize: CGFloat = headerView.height/2
+        let imageView = UIImageView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: imageSize,
+                                                  height: imageSize))
+        headerView.addSubview(imageView)
+        imageView.center = headerView.center
+        imageView.contentMode = .scaleAspectFill
+        imageView.sd_setImage(with: url, completed: nil)
+        
+        tableView.tableHeaderView = headerView
+        
+    }
+    
     private func failedToGetProfile() {
         let label = UILabel(frame: .zero)
         label.text = "Failed to load profile."

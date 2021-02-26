@@ -317,6 +317,7 @@
 				75CC200725E1F427001D9242 /* Resources */,
 				BF104B9BA4CD33EED7B1F46D /* [CP] Embed Pods Frameworks */,
 				75CC203E25E1F7A7001D9242 /* Embed Frameworks */,
+				A5D2FD1C4264202A82CEC2D4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -355,6 +356,7 @@
 				75CC202725E1F42B001D9242 /* Frameworks */,
 				75CC202825E1F42B001D9242 /* Resources */,
 				618C54E3A0CEAEBB6E8AC895 /* [CP] Embed Pods Frameworks */,
+				53102511352F2F8BB743B567 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -457,6 +459,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		53102511352F2F8BB743B567 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SoundBit-SoundBitUITests/Pods-SoundBit-SoundBitUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SoundBit-SoundBitUITests/Pods-SoundBit-SoundBitUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SoundBit-SoundBitUITests/Pods-SoundBit-SoundBitUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		618C54E3A0CEAEBB6E8AC895 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -472,6 +491,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SoundBit-SoundBitUITests/Pods-SoundBit-SoundBitUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5D2FD1C4264202A82CEC2D4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SoundBit/Pods-SoundBit-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SoundBit/Pods-SoundBit-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SoundBit/Pods-SoundBit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BF104B9BA4CD33EED7B1F46D /* [CP] Embed Pods Frameworks */ = {
@@ -740,6 +776,31 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AWSAuthCore\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCognitoIdentityProviderASF\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSMobileClient\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Me2.SoundBit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -759,6 +820,31 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AWSAuthCore\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCognitoIdentityProviderASF\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSMobileClient\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Me2.SoundBit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
