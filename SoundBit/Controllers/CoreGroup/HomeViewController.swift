@@ -17,7 +17,22 @@ class HomeViewController: UIViewController {
             image: UIImage(systemName: "gear"),
             style: .done,
             target: self,
-            action: #selector(didTapSettings))
+            action: #selector(didTapSettings)
+        )
+        // Calling the API from the HomeViewController
+        fetchData()
+    }
+    
+    private func fetchData() {
+        APICaller.shared.getNewReleases { result in
+            switch result {
+            case .success(let model): break
+            case .failure(let error): break 
+                
+            
+            }
+        }
+        
     }
     
     @objc func didTapSettings() {
