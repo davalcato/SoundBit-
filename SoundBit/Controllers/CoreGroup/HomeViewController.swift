@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Home"
+        title = "Browse"
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "gear"),
@@ -22,17 +22,15 @@ class HomeViewController: UIViewController {
         // Calling the API from the HomeViewController
         fetchData()
     }
-    
+    // Make multiple API calls from here 
     private func fetchData() {
         APICaller.shared.getNewReleases { result in
             switch result {
             case .success(let model): break
             case .failure(let error): break 
                 
-            
             }
         }
-        
     }
     
     @objc func didTapSettings() {

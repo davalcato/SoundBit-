@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		51A72EBA3F31E57495589165 /* Pods_SoundBit_SoundBitUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C0FB47B9350C16A9BF03E8D /* Pods_SoundBit_SoundBitUITests.framework */; };
-		75A666EB25E8BA59004EB157 /* NewReleaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EA25E8BA58004EB157 /* NewReleaseResponse.swift */; };
+		75A666EB25E8BA59004EB157 /* NewReleasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EA25E8BA58004EB157 /* NewReleasesResponse.swift */; };
 		75A666ED25E8BE86004EB157 /* APIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EC25E8BE86004EB157 /* APIImage.swift */; };
 		75CAD6BD25E74FE90040685E /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CAD6BC25E74FE90040685E /* SettingsModels.swift */; };
 		75CC200D25E1F427001D9242 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CC200C25E1F427001D9242 /* AppDelegate.swift */; };
@@ -77,7 +77,7 @@
 		0C0FB47B9350C16A9BF03E8D /* Pods_SoundBit_SoundBitUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundBit_SoundBitUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E1EBA4185B10B18F8F1D932 /* Pods_SoundBitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundBitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D931D4FF83AC6482F5F1F3B /* Pods-SoundBitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundBitTests.release.xcconfig"; path = "Target Support Files/Pods-SoundBitTests/Pods-SoundBitTests.release.xcconfig"; sourceTree = "<group>"; };
-		75A666EA25E8BA58004EB157 /* NewReleaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleaseResponse.swift; sourceTree = "<group>"; };
+		75A666EA25E8BA58004EB157 /* NewReleasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesResponse.swift; sourceTree = "<group>"; };
 		75A666EC25E8BE86004EB157 /* APIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIImage.swift; sourceTree = "<group>"; };
 		75CAD6BC25E74FE90040685E /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
 		75CC200925E1F427001D9242 /* SoundBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,7 +219,7 @@
 				75F22B4A25E204B600E384B7 /* UserProfile.swift */,
 				75F22B4E25E4A25100E384B7 /* AuthResponse.swift */,
 				75CAD6BC25E74FE90040685E /* SettingsModels.swift */,
-				75A666EA25E8BA58004EB157 /* NewReleaseResponse.swift */,
+				75A666EA25E8BA58004EB157 /* NewReleasesResponse.swift */,
 				75A666EC25E8BE86004EB157 /* APIImage.swift */,
 			);
 			path = Models;
@@ -606,7 +606,7 @@
 				75F22B3925E202F000E384B7 /* PlaylistViewController.swift in Sources */,
 				75F22B2B25E201AE00E384B7 /* LibraryViewController.swift in Sources */,
 				75F22B3725E202A400E384B7 /* PlayerViewController.swift in Sources */,
-				75A666EB25E8BA59004EB157 /* NewReleaseResponse.swift in Sources */,
+				75A666EB25E8BA59004EB157 /* NewReleasesResponse.swift in Sources */,
 				75F22B3F25E203BA00E384B7 /* APICaller.swift in Sources */,
 				75CC200F25E1F427001D9242 /* SceneDelegate.swift in Sources */,
 			);

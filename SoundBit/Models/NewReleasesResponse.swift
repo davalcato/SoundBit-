@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NewReleaseResponse: Codable {
+struct NewReleasesResponse: Codable {
     // Root key here
     let albums: AlbumsResponse
     
