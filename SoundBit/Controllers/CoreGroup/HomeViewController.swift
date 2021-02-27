@@ -24,7 +24,7 @@ class HomeViewController: UIViewController {
     }
     // Make multiple API calls from here 
     private func fetchData() {
-        APICaller.shared.getFeaturePlaylists { _ in
+        APICaller.shared.getRecommendedGenres { _ in
             
         }
     }

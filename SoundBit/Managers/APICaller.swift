@@ -81,7 +81,6 @@ final class APICaller {
                 }
                 do {
                     let result = try JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                 }
                 catch {
@@ -89,6 +88,30 @@ final class APICaller {
                 }
             }
             task.resume()
+        }
+    }
+    
+    public func getRecommendedGenres(completion: @escaping ((Result<String, Error>)) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations/available-genre-seeds"),
+                      type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
+                // Convert the data to actual JSON here
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                        JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
+                    print("json: \(result)")
+//                    completion(.success(result))
+                }
+                catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+            
         }
     }
     
