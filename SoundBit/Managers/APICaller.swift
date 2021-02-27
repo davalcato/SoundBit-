@@ -14,7 +14,6 @@ final class APICaller {
     
     struct Constants {
         static let baseAPIURL = "https://api.spotify.com/v1"
-        
     }
     
     // Create custom errors here
@@ -61,9 +60,29 @@ final class APICaller {
                 }
                 do {
                     let result = try JSONDecoder().decode(NewReleasesResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
-                    
+                }
+                catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getFeaturePlaylists(completion: @escaping ((Result<String, Error>)) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/featured-playlists?limit=2"),
+                      type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
+                // Convert the data to actual JSON here
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                        JSONDecoder().decode(NewReleasesResponse.self, from: data)
+                    print(json)
                 }
                 catch {
                     completion(.failure(error))
