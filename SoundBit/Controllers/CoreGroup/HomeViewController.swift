@@ -24,8 +24,25 @@ class HomeViewController: UIViewController {
     }
     // Make multiple API calls from here 
     private func fetchData() {
-        APICaller.shared.getRecommendedGenres { _ in
+        APICaller.shared.getRecommendedGenres { result in
+            switch result {
+            case .success(let model): 
+                let genres = model.genres
+                // Get five random elements from the json
+                var seeds = Set<String>()
+                while seeds.count < 5 {
+                    // Append a random genres here
+                    if let random = genres.randomElement() {
+                        seeds.insert(random)
+                    }
+                }
+                APICaller.shared.getRecommendations(genres: seeds) { _ in
+                    
+                }
+                
+            case .failure(let error): break
             
+            }
         }
     }
     
