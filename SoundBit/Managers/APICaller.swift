@@ -113,6 +113,7 @@ final class APICaller {
             }
             task.resume()
         }
+        
     }
     
     public func getRecommendedGenres(completion: @escaping ((Result<RecommendedGenresResponse, Error>)) -> Void) {
@@ -137,15 +138,13 @@ final class APICaller {
             
         }
     }
-    
+
     // MARK: - Private
     
     enum HTTPMethod: String {
         case GET
         case POST
-        
     }
-    
     private func createRequest(
         with url: URL?,
         type: HTTPMethod,
