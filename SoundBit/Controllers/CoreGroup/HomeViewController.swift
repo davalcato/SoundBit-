@@ -74,7 +74,7 @@ class HomeViewController: UIViewController {
         let verticalGroup = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(120)),
+                heightDimension: .absolute(360)),
             subitem: item,
             count: 3
         )
@@ -83,7 +83,7 @@ class HomeViewController: UIViewController {
         let horizontalGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(120)),
+                heightDimension: .absolute(360)),
             subitem: verticalGroup,
             count: 1
         )
