@@ -62,6 +62,12 @@ class HomeViewController: UIViewController {
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .fractionalHeight(1.0)))
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2,
+                                                     leading: 2,
+                                                     bottom: 2,
+                                                     trailing: 2)
+        
         // Group
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
