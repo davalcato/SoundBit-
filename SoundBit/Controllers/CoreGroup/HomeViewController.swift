@@ -36,6 +36,8 @@ class HomeViewController: UIViewController {
         
         // Configuring the collectionView here
         configureCollectionView()
+        // So the title Browse scroll with the collectionView
+        view.addSubview(spinner)
         // Calling the API from the HomeViewController
         fetchData()
     }
@@ -69,7 +71,7 @@ class HomeViewController: UIViewController {
                                                      trailing: 2)
         
         // Group
-        let group = NSCollectionLayoutGroup.vertical(
+        let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(120)),
@@ -79,6 +81,7 @@ class HomeViewController: UIViewController {
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
         return section
     }
     
