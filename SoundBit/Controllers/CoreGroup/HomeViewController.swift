@@ -118,7 +118,7 @@ class HomeViewController: UIViewController {
          
             let horizontalGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalHeight(1),
+                    widthDimension: .absolute(250),
                     heightDimension: .absolute(250)),
                 subitem: item,
                 count: 1
