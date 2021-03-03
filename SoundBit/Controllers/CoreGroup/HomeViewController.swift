@@ -108,36 +108,26 @@ class HomeViewController: UIViewController {
             // Item
             let item = NSCollectionLayoutItem(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(1.0)))
+                    widthDimension: .absolute(250),
+                    heightDimension: .absolute(250)))
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 2,
                                                          leading: 2,
                                                          bottom: 2,
                                                          trailing: 2)
-            
-            // Vertical group inside the horizontal group
-            let verticalGroup = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(390)),
-                subitem: item,
-                count: 3
-            )
-            
-            
+         
             let horizontalGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(390)),
-                subitem: verticalGroup,
+                    widthDimension: .fractionalHeight(1),
+                    heightDimension: .absolute(250)),
+                subitem: item,
                 count: 1
             )
             
             // Section
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             // This snapped the page views together
-            section.orthogonalScrollingBehavior = .groupPaging
+            section.orthogonalScrollingBehavior = .continuous
             return section
             
         case 2:
@@ -155,8 +145,8 @@ class HomeViewController: UIViewController {
             // Vertical group inside the horizontal group
             let verticalGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(390)),
+                    widthDimension: .absolute(250),
+                    heightDimension: .absolute(250)),
                 subitem: item,
                 count: 3
             )
@@ -164,8 +154,8 @@ class HomeViewController: UIViewController {
             
             let horizontalGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(390)),
+                    widthDimension: .absolute(250),
+                    heightDimension: .absolute(250)),
                 subitem: verticalGroup,
                 count: 1
             )
