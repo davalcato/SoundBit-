@@ -222,6 +222,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return UICollectionViewCell()
            }
             let viewModel = viewModels[indexPath.row]
+            cell.configure(with: viewModel)
             
             return cell
             
