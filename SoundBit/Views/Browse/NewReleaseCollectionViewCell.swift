@@ -45,6 +45,8 @@ class NewReleaseCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(albumCoverImageView)
         contentView.addSubview(albumNameLabel)
         contentView.addSubview(artistNameLabel)
+        // Fixing the text label overflow
+        contentView.clipsToBounds = true
         contentView.addSubview(numberOfTracksLabel)
     }
     required init?(coder: NSCoder) {
@@ -52,16 +54,38 @@ class NewReleaseCollectionViewCell: UICollectionViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
+        let imageSize: CGFloat = contentView.height-10
+        let albumLabelSize = albumNameLabel.sizeThatFits(CGSize(
+                                                            width: contentView.width-imageSize-10,
+                                                            height: contentView.height-10))
         albumNameLabel.sizeToFit()
         artistNameLabel.sizeToFit()
         numberOfTracksLabel.sizeToFit()
         
-        let imageSize: CGFloat = contentView.height-10
         albumCoverImageView.frame = CGRect(
             x: 5,
             y: 5,
             width: imageSize,
             height: imageSize)
+        
+        albumNameLabel.frame = CGRect(
+            x: albumCoverImageView.right+10,
+            y: 5,
+            width: albumLabelSize.width,
+            height: min(80, albumLabelSize.height))
+        
+        artistNameLabel.frame = CGRect(
+            x: albumCoverImageView.right+10,
+            y: albumNameLabel.bottom+5,
+            // This buffers from the left and right
+            width: contentView.width - albumCoverImageView.right-5,
+            height: min(80, albumLabelSize.height))
+        
+        numberOfTracksLabel.frame = CGRect(
+            x: albumCoverImageView.right+10,
+            y: contentView.bottom-44,
+            width: numberOfTracksLabel.width,
+            height: 44)
     }
     override func prepareForReuse() {
         super.prepareForReuse()
