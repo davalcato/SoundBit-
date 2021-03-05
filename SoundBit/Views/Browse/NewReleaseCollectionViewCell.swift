@@ -23,19 +23,19 @@ class NewReleaseCollectionViewCell: UICollectionViewCell {
        let label = UILabel()
         // Text will wrap if it needs to
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 22, weight: .semibold)
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     private let numberOfTracksLabel: UILabel = {
        let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.font = .systemFont(ofSize: 18, weight: .thin)
         label.numberOfLines = 0
         return label
     }()
     private let artistNameLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 18, weight: .light)
         return label
     }()
     
