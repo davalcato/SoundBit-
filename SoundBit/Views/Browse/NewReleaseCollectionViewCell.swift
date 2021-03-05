@@ -62,28 +62,32 @@ class NewReleaseCollectionViewCell: UICollectionViewCell {
         artistNameLabel.sizeToFit()
         numberOfTracksLabel.sizeToFit()
         
+        // Image
         albumCoverImageView.frame = CGRect(
             x: 5,
             y: 5,
             width: imageSize,
             height: imageSize)
+        // Making height it's own property
+        let albumLabelHeight = min(60, albumLabelSize.height)
         
+        // AlbumNameLabel
         albumNameLabel.frame = CGRect(
             x: albumCoverImageView.right+10,
             y: 5,
             width: albumLabelSize.width,
-            height: min(80, albumLabelSize.height))
+            height: albumLabelHeight)
         
         artistNameLabel.frame = CGRect(
             x: albumCoverImageView.right+10,
-            y: albumNameLabel.bottom+5,
+            y: albumNameLabel.bottom,
             // This buffers from the left and right
             width: contentView.width - albumCoverImageView.right-5,
-            height: min(80, albumLabelSize.height))
+            height: 26)
         
         numberOfTracksLabel.frame = CGRect(
             x: albumCoverImageView.right+10,
-            y: contentView.bottom-44,
+            y: albumCoverImageView.bottom-50,
             width: numberOfTracksLabel.width,
             height: 44)
     }
