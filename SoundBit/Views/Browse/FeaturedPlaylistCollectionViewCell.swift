@@ -22,14 +22,16 @@ class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
        let label = UILabel()
         // Text will wrap if it needs to
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .regular)
         return label
     }()
     
     private let creatorNameLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 15, weight: .thin)
         return label
     }()
     
@@ -51,17 +53,17 @@ class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
         // Create a fixed heighted for the Creator playlist
         creatorNameLabel.frame = CGRect(
             x: 3,
-            y: contentView.height-44,
+            y: contentView.height-30,
             width: contentView.width-6,
-            height: 44
+            height: 30
         )
         playlistNameLabel.frame = CGRect(
             x: 3,
-            y: contentView.height-90,
+            y: contentView.height-60,
             width: contentView.width-6,
-            height: 44
+            height: 30
         )
-        let imageSize = contentView.height-105
+        let imageSize = contentView.height-70
         playlistCoverImageView.frame = CGRect(
             x: (contentView.width-imageSize)/2,
             y: 3,
