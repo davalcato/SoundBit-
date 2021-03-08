@@ -87,7 +87,5 @@ class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
         playlistCoverImageView.sd_setImage(with: viewModel.artworkURL,
                                            completed: nil)
         creatorNameLabel.text = viewModel.creatorName
-       
     }
-    
 }
