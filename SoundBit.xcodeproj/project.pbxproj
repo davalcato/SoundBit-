@@ -15,6 +15,7 @@
 		7588FCFB25EA0DA00006A357 /* FeaturedPlaylistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7588FCFA25EA0DA00006A357 /* FeaturedPlaylistsResponse.swift */; };
 		75A666EB25E8BA59004EB157 /* NewReleasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EA25E8BA58004EB157 /* NewReleasesResponse.swift */; };
 		75A666ED25E8BE86004EB157 /* APIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EC25E8BE86004EB157 /* APIImage.swift */; };
+		75A9474F25F5B59E006D8FF8 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A9474E25F5B59E006D8FF8 /* AlbumViewController.swift */; };
 		75CAD6BD25E74FE90040685E /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CAD6BC25E74FE90040685E /* SettingsModels.swift */; };
 		75CC200D25E1F427001D9242 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CC200C25E1F427001D9242 /* AppDelegate.swift */; };
 		75CC200F25E1F427001D9242 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CC200E25E1F427001D9242 /* SceneDelegate.swift */; };
@@ -93,6 +94,7 @@
 		7588FCFA25EA0DA00006A357 /* FeaturedPlaylistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistsResponse.swift; sourceTree = "<group>"; };
 		75A666EA25E8BA58004EB157 /* NewReleasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesResponse.swift; sourceTree = "<group>"; };
 		75A666EC25E8BE86004EB157 /* APIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIImage.swift; sourceTree = "<group>"; };
+		75A9474E25F5B59E006D8FF8 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		75CAD6BC25E74FE90040685E /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
 		75CC200925E1F427001D9242 /* SoundBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75CC200C25E1F427001D9242 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				75F22B3625E202A400E384B7 /* PlayerViewController.swift */,
 				75F22B3825E202F000E384B7 /* PlaylistViewController.swift */,
 				75F22B3A25E2035A00E384B7 /* SearchResultsViewController.swift */,
+				75A9474E25F5B59E006D8FF8 /* AlbumViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				TargetAttributes = {
 					75CC200825E1F427001D9242 = {
 						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1250;
 					};
 					75CC201E25E1F42B001D9242 = {
 						CreatedOnToolsVersion = 12.0;
@@ -625,6 +629,7 @@
 				75D8F45D25EF515A00268C32 /* NewReleasesCellViewModel.swift in Sources */,
 				7514B86A25F45F980044CFEC /* RecommendedTrackCellViewModel.swift in Sources */,
 				75F22B3B25E2035A00E384B7 /* SearchResultsViewController.swift in Sources */,
+				75A9474F25F5B59E006D8FF8 /* AlbumViewController.swift in Sources */,
 				7514B86825F449540044CFEC /* FeaturedPlaylistCellViewModel.swift in Sources */,
 				7588FCFB25EA0DA00006A357 /* FeaturedPlaylistsResponse.swift in Sources */,
 				75F22B3125E2023F00E384B7 /* WelcomeViewController.swift in Sources */,
@@ -821,6 +826,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QFQW29JWKY;
 				INFOPLIST_FILE = SoundBit/Info.plist;
@@ -855,6 +861,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Me2.SoundBit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -866,6 +873,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QFQW29JWKY;
 				INFOPLIST_FILE = SoundBit/Info.plist;

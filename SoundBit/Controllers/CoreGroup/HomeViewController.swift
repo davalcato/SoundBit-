@@ -17,6 +17,10 @@ enum BrowseSectionType {
 
 class HomeViewController: UIViewController {
     
+    private var newAlbums: [Album] = []
+    private var playlists: [Playlist] = []
+    private var tracks: [AudioTrack] = []
+    
     private var collectionView: UICollectionView =  UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in return HomeViewController.createSectionLayout(section: sectionIndex)
@@ -156,17 +160,18 @@ class HomeViewController: UIViewController {
                 tracks: tracks)
             }
         }
-        
+    
         private func configureModels(
             newAlbums: [Album],
             playlists: [Playlist],
             tracks: [AudioTrack]
         
         ) {
-            print(newAlbums.count)
-            print(playlists.count)
-            print(tracks.count)
-            
+            // Adding properties to configureModels
+            self.newAlbums = newAlbums
+            self.playlists = playlists
+            self.tracks = tracks
+           
             // Configuring the Models here
             sections.append(.newReleases(viewModels: newAlbums.compactMap({
                 // Convert every album into the viewModels
@@ -258,6 +263,29 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
              return cell
         }
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        // Get the section here
+        let section = sections[indexPath.section]
+        switch section {
+        case .featuredPlaylists:
+            break
+        case .newReleases:
+            // Query data API of Album
+            let album = newAlbums[indexPath.row]
+            // Creating the ViewController for AlbumViewController
+            let vc = AlbumViewController(album: album)
+            vc.title = album.name
+            vc.navigationItem.largeTitleDisplayMode = .never
+            // Push the navigation onton the stack here
+            navigationController?.pushViewController(vc, animated: true)
+            break
+        case .recommendedTracks:
+            break
+        
+        }
     }
     
     // Creates the layout here
@@ -381,6 +409,5 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return section
         }
     }
-    
 }
 
