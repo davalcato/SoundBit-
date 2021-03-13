@@ -21,6 +21,37 @@ final class APICaller {
         case failedToGetData
     }
     
+    // MARK: Albums
+    
+    public func getAlbumDetails(for album: Album, completion: @escaping (Result<String, Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/albums/" + album.id),
+            type: .GET)
+        { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                // Unwrapped the data
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                // Try to convert data into a JSON object
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(json)
+                }
+                catch {
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    // MARK: Playlists
+    
+    // MARK: Profile
+    
     public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseAPIURL + "/me"),
@@ -48,6 +79,8 @@ final class APICaller {
             task.resume()
         }
     }
+    
+    // MARK: BROWSE
     
     public func getNewReleases(completion: @escaping ((Result<NewReleasesResponse, Error>)) -> Void) {
         createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?limit=50"),
