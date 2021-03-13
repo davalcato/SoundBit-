@@ -38,11 +38,11 @@ final class APICaller {
                 do {
                     let result = try JSONDecoder().decode(AlbumDetailsResponse.self, from: data)
 //                        JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(result)
+//                    print(result)
                     completion(.success(result))
                 }
                 catch {
-                    print(error)
+//                    print(error)
                     completion(.failure(error))
                 }
             }
@@ -51,7 +51,32 @@ final class APICaller {
     }
     
     // MARK: Playlists
-    
+    public func getPlaylistDetails(for playlist: Playlist, completion: @escaping (Result<PlaylistDetailsResponses, Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/playlists/" + playlist.id),
+            type: .GET)
+        { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                // Unwrapped the data
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(PlaylistDetailsResponses.self, from: data)
+//                        JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    print(result)
+                    completion(.success(result))
+                }
+                catch {
+//                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
     // MARK: Profile
     
     public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
