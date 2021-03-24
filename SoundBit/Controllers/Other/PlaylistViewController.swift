@@ -131,7 +131,12 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
         kind == UICollectionView.elementKindSectionHeader else {
             return UICollectionReusableView()
         }
-        // header.configure(with: headerViewModel)
+        let headerViewModel = PlaylistHeaderViewModel(
+            name: playlist.name,
+            ownerName: playlist.owner.display_name,
+            description: playlist.description,
+            artworkURL: URL(string: playlist.images.first?.url ?? ""))
+         header.configure(with: headerViewModel)
         return header
         
     }
