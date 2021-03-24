@@ -19,11 +19,14 @@ final class PlaylistHeaderCollectionReusableView: UICollectionReusableView {
     }()
     private let descriptionLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .secondaryLabel
         label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.numberOfLines = 0
         return label
     }()
     private let ownerLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .secondaryLabel
         label.font = .systemFont(ofSize: 18, weight: .light)
         return label
     }()
