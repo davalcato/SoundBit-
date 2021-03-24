@@ -387,7 +387,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             // Section
             let section = NSCollectionLayoutSection(group: group)
             return section
-            
         default:
             // Item
             let item = NSCollectionLayoutItem(
