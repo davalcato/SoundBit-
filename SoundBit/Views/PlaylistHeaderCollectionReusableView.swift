@@ -8,9 +8,18 @@
 import UIKit
 import SDWebImage
 
+// Create delegate to notify PlayAllButton
+protocol PlaylistHeaderCollectionReusableViewDelegate: AnyObject {
+    func PlaylistHeaderCollectionReusableViewDidTapPlayAll(_ header: PlaylistHeaderCollectionReusableView)
+    
+}
+
 
 final class PlaylistHeaderCollectionReusableView: UICollectionReusableView {
     static let identifier = "PlaylistHeaderCollectionReusableView"
+    
+    // Create a weak reference property on the delegate
+    weak var delegate: PlaylistHeaderCollectionReusableViewDelegate?
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -69,7 +78,7 @@ final class PlaylistHeaderCollectionReusableView: UICollectionReusableView {
     }
     // Private selector
     @objc private func didTapPlayAll() {
-        
+        delegate?.PlaylistHeaderCollectionReusableViewDidTapPlayAll(self)
         
     }
     

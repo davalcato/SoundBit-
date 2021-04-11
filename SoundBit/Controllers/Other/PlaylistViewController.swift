@@ -136,7 +136,10 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
             ownerName: playlist.owner.display_name,
             description: playlist.description,
             artworkURL: URL(string: playlist.images.first?.url ?? ""))
+        
          header.configure(with: headerViewModel)
+         header.delegate = self
+    
         return header
         
     }
@@ -148,6 +151,14 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
         
         // Play song
         
+    }
+    
+}
+// Conform to the protocol
+extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {
+    func PlaylistHeaderCollectionReusableViewDidTapPlayAll(_ header: PlaylistHeaderCollectionReusableView) {
+        // Start all of play list in queue
+        print("Playing all")
     }
     
 }
