@@ -96,7 +96,27 @@ class PlaylistViewController: UIViewController {
                 }
             }
         }
+        // Add the share button at the top right
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self, action: #selector(didTapShare))
     }
+    // Create share button
+    @objc private func didTapShare() {
+        guard let url = URL(string: playlist.external_urls["spotify"] ?? "") else {
+            
+            return
+        }
+        let vc = UIActivityViewController(
+            activityItems: [url],
+            applicationActivities: []
+        )
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
+        
+    }
+    
+    
     // Give collectionview a frame
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
