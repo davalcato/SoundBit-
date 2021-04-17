@@ -131,7 +131,7 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let headerViewModel = PlaylistHeaderViewModel(
             name: album.name,
             ownerName: album.artists.first?.name,
-            description: "Release Date: \(album.release_date)",
+            description: "Release Date: \(String.formattedDate(string: album.release_date))",
             artworkURL: URL(string: album.images.first?.url ?? ""))
 
          header.configure(with: headerViewModel)
