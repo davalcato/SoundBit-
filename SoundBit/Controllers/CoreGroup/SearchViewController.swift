@@ -21,6 +21,28 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         
         return vc
     }()
+    
+    private let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { _, _ -> NSCollectionLayoutSection? in
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        // Add a inset to the cell
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: 2,
+            leading: 2,
+            bottom: 2,
+            trailing: 2)
+        
+        
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(180)),
+            subitems: [item, item])
+        
+        return NSCollectionLayoutSection(group: group)
+        
+    }))
+    
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +50,22 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         // Retrieve out of the searchcontroller text typed
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
+        // Add as a subview
+        view.addSubview(collectionView)
+        // Register the cell
+        collectionView.register(UICollectionViewCell.self,
+                                forCellWithReuseIdentifier: "cell")
+        // Assign the delegate
+        collectionView.delegate = self
+        // Assign the datasource
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .systemBackground
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Give the cell a frame
+        collectionView.frame = view.bounds
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -48,4 +86,22 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
 //        APICaller.shared.search
     }
   
+}
+
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .systemGreen
+        return cell
+        
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
 }
