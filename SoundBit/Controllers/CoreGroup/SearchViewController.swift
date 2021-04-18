@@ -68,6 +68,23 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         // Assign the datasource
         collectionView.dataSource = self
         collectionView.backgroundColor = .systemBackground
+        
+        // Fetch category
+        APICaller.shared.getCategories { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let models):
+                    let first = models.first!
+                    APICaller.shared.getCategoryPlaylists(
+                        category: first) { FOOTPRINT in
+                        
+                    }
+                case .failure(let error): break
+                    
+                    
+                }
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {

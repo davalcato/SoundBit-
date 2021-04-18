@@ -190,6 +190,7 @@ final class APICaller {
                     completion(.success(result))
                 }
                 catch {
+                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
             }
@@ -197,7 +198,76 @@ final class APICaller {
             
         }
     }
-
+    
+    // MARK: - Category
+    
+    // Retrieve categories
+    public func getCategories(completion: @escaping (Result<[Category], Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/browse/categories?limit=2"),
+            type: .GET
+        ) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                // Validate the date
+                guard let data = data, error == nil else {
+                    
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                // Convert the data
+                
+                do {
+                    let result = try JSONDecoder().decode(AllCategoriesResponse.self, from: data)
+                        
+//                        JSONSerialization.jsonObject(
+//                        with: data,
+//                        options: .allowFragments)
+                    print(result.categories.items)
+                    
+                    completion(.success(result.categories.items))
+                    
+                }
+                catch {
+                    print(error.localizedDescription)
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getCategoryPlaylists(category: Category, completion: @escaping (Result<[Playlist], Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/browse/categories/\(category.id)/playlists?limit=2"),
+            type: .GET
+        ) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                // Validate the date
+                guard let data = data, error == nil else {
+                    
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                // Convert the data
+                
+                do {
+                    let json = try JSONSerialization.jsonObject(
+                        with: data,
+                        options: .allowFragments)
+                    print(json)
+                    
+                }
+                catch {
+                    print(error.localizedDescription)
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+        }
+    }
+    
     // MARK: - Private
     
     enum HTTPMethod: String {
