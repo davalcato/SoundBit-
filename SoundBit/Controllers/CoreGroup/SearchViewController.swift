@@ -27,16 +27,24 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         // Add a inset to the cell
         item.contentInsets = NSDirectionalEdgeInsets(
             top: 2,
-            leading: 2,
+            leading: 7,
             bottom: 2,
-            trailing: 2)
+            trailing: 7)
         
         
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(180)),
-            subitems: [item, item])
+                heightDimension: .absolute(150)),
+            subitem: item,
+            count: 2
+        )
+        
+        group.contentInsets = NSDirectionalEdgeInsets(
+            top: 10,
+            leading: 0,
+            bottom: 10,
+            trailing: 0)
         
         return NSCollectionLayoutSection(group: group)
         
