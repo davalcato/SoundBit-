@@ -61,8 +61,8 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         // Add as a subview
         view.addSubview(collectionView)
         // Register the cell
-        collectionView.register(UICollectionViewCell.self,
-                                forCellWithReuseIdentifier: "cell")
+        collectionView.register(GenreCollectionViewCell.self,
+                                forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
         // Assign the delegate
         collectionView.delegate = self
         // Assign the datasource
@@ -98,8 +98,16 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .systemGreen
+        guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: GenreCollectionViewCell.identifier,
+                for: indexPath
+        ) as? GenreCollectionViewCell else {
+            // Return a genre cell
+            return UICollectionViewCell()
+            
+        }
+        
+        cell.configure(with: "Rock")
         return cell
         
     }
