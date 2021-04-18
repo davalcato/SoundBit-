@@ -34,6 +34,18 @@ class GenreCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // Create random colors on the cell
+    private let colors: [UIColor] = [
+        .systemGreen,
+        .systemPurple,
+        .systemRed,
+        .systemOrange,
+        .systemBlue,
+        .darkGray,
+        .systemPink,
+        .systemTeal
+    ]
+    
     // Add the initizier
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,7 +87,7 @@ class GenreCollectionViewCell: UICollectionViewCell {
     func configure(with title: String) {
         label.text = title
         // Background color
-        contentView.backgroundColor = .systemGreen
+        contentView.backgroundColor = colors.randomElement()
         
     }
     
