@@ -252,14 +252,23 @@ final class APICaller {
                 // Convert the data
                 
                 do {
-                    let json = try JSONSerialization.jsonObject(
-                        with: data,
-                        options: .allowFragments)
-                    print(json)
+                    let result = try
+                        JSONDecoder().decode(CategoryPlaylistsResponse.self, from: data)
+                    // Retrieve the playlist
+                    let playlists = result.playlists.items
+                    print(playlists)
+                    
+                    completion(.success(playlists))
+                    
+                    
+//                        JSONSerialization.jsonObject(
+//                        with: data,
+//                        options: .allowFragments)
+//                    print(json)
                     
                 }
                 catch {
-                    print(error.localizedDescription)
+//                    print(error.localizedDescription)
                     completion(.failure(error))
                     
                 }
