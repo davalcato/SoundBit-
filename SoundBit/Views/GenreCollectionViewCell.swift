@@ -84,7 +84,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         
         imageView.frame = CGRect(
             x: contentView.width/2,
-            y: 0,
+            y: 10,
             width: contentView.width/2,
             height: contentView.height/2)
     }
