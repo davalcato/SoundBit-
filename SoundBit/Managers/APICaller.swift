@@ -204,7 +204,7 @@ final class APICaller {
     // Retrieve categories
     public func getCategories(completion: @escaping (Result<[Category], Error>) -> Void) {
         createRequest(
-            with: URL(string: Constants.baseAPIURL + "/browse/categories?limit=2"),
+            with: URL(string: Constants.baseAPIURL + "/browse/categories?limit=50"),
             type: .GET
         ) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -215,20 +215,18 @@ final class APICaller {
                     return
                 }
                 // Convert the data
-                
                 do {
                     let result = try JSONDecoder().decode(AllCategoriesResponse.self, from: data)
                         
 //                        JSONSerialization.jsonObject(
 //                        with: data,
 //                        options: .allowFragments)
-                    print(result.categories.items)
-                    
+//                    print(result.categories.items)
                     completion(.success(result.categories.items))
                     
                 }
                 catch {
-                    print(error.localizedDescription)
+//                    print(error.localizedDescription)
                     completion(.failure(error))
                     
                 }
@@ -250,16 +248,12 @@ final class APICaller {
                     return
                 }
                 // Convert the data
-                
                 do {
                     let result = try
                         JSONDecoder().decode(CategoryPlaylistsResponse.self, from: data)
                     // Retrieve the playlist
                     let playlists = result.playlists.items
-                    print(playlists)
-                    
                     completion(.success(playlists))
-                    
                     
 //                        JSONSerialization.jsonObject(
 //                        with: data,

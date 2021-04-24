@@ -10,8 +10,7 @@ import Foundation
 
 struct AllCategoriesResponse: Codable {
     let categories: Categories
-   
-    
+
 }
 
 struct Categories: Codable {

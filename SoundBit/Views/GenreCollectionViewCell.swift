@@ -1,15 +1,16 @@
 //
-//  GenreCollectionViewCell.swift
+//  CategoryCollectionViewCell.swift
 //  SoundBit
 //
 //  Created by Daval Cato on 4/18/21.
 //
 
 import UIKit
+import SDWebImage
 
-class GenreCollectionViewCell: UICollectionViewCell {
+class CategoryCollectionViewCell: UICollectionViewCell {
     // Add the identifier
-    static let identifier = "GenreCollectionViewCell"
+    static let identifier = "CategoryCollectionViewCell"
     
     // Add two subviews
     private let imageView: UIImageView = {
@@ -64,6 +65,11 @@ class GenreCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         label.text = nil
+        // Reset the image to the original image
+        imageView.image = UIImage(systemName: "music.quarternote.3",
+                                  withConfiguration: UIImage.SymbolConfiguration(
+                                    pointSize: 50,
+                                    weight: .regular))
     }
     
     override func layoutSubviews() {
@@ -84,8 +90,11 @@ class GenreCollectionViewCell: UICollectionViewCell {
     }
     
     // Configure the genre names
-    func configure(with title: String) {
-        label.text = title
+    func configure(with viewModel: CategoryCollectionViewCellViewModel) {
+        label.text = viewModel.title
+        imageView.sd_setImage(
+            with: viewModel.artworkURL,
+            completed: nil)
         // Background color
         contentView.backgroundColor = colors.randomElement()
         

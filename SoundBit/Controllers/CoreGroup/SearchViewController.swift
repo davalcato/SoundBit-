@@ -50,6 +50,8 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         
     }))
     
+    private var categories = [Category]()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -61,8 +63,8 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         // Add as a subview
         view.addSubview(collectionView)
         // Register the cell
-        collectionView.register(GenreCollectionViewCell.self,
-                                forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        collectionView.register(CategoryCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         // Assign the delegate
         collectionView.delegate = self
         // Assign the datasource
@@ -73,14 +75,13 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         APICaller.shared.getCategories { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let models):
-                    let first = models.first!
-                    APICaller.shared.getCategoryPlaylists(
-                        category: first) { FOOTPRINT in
-                        
-                    }
-                case .failure(let error): break
+                case .success(let categories):
+                    self?.categories = categories
                     
+                    self?.collectionView.reloadData()
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                     
                 }
             }
@@ -100,11 +101,8 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
               !query.trimmingCharacters(in: .whitespaces).isEmpty else {
             // Make sure it's not nil
             return
-            
         }
         // resultsController.update(with: results)
-        
-        
         print(query)
         
         // Perform search
@@ -116,17 +114,18 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: GenreCollectionViewCell.identifier,
+                withReuseIdentifier: CategoryCollectionViewCell.identifier,
                 for: indexPath
-        ) as? GenreCollectionViewCell else {
+            
+        ) as? CategoryCollectionViewCell else {
             // Return a genre cell
             return UICollectionViewCell()
-            
         }
-        
-        cell.configure(with: "Rock")
+        let category = categories[indexPath.row]
+        cell.configure(with: CategoryCollectionViewCellViewModel(
+                        title: category.name,
+                        artworkURL: URL(string: category.icons.first?.url ?? "")))
         return cell
-        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -134,7 +133,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        // CollectionView driven by number of categories
+        return categories.count
     }
     
 }
