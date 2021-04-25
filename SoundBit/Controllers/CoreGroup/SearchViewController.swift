@@ -102,11 +102,20 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
             // Make sure it's not nil
             return
         }
-        // resultsController.update(with: results)
-        print(query)
+        // Everytime a key is pressed
+        APICaller.shared.search(
+            with: query) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let results):
+                    break
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
         
-        // Perform search
-//        APICaller.shared.search
+        print(query)
     }
   
 }
