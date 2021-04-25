@@ -288,13 +288,15 @@ final class APICaller {
                 }
                 // Otherwise we convert into JSON
                 do {
-                    let json = try JSONSerialization.jsonObject(
-                        with: data,
-                        options: .allowFragments)
-                    print(json)
+                    let result = try JSONDecoder().decode(SearchResultsResponse.self, from: data)
+                        
+//                        JSONSerialization.jsonObject(
+//                        with: data,
+//                        options: .allowFragments)
+                    print(result)
                 }
                 catch {
-                    print(error)
+                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
             }
