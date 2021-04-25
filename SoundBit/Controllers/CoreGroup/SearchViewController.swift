@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchResultsUpdating {
+class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     
     // Top view search bar
@@ -59,7 +59,12 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         view.backgroundColor = .systemBackground
         // Retrieve out of the searchcontroller text typed
         searchController.searchResultsUpdater = self
+        
+        // Add the delegate
+        searchController.searchBar.delegate = self
+        
         navigationItem.searchController = searchController
+       
         // Add as a subview
         view.addSubview(collectionView)
         // Register the cell
@@ -94,10 +99,10 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         collectionView.frame = view.bounds
     }
     
-    func updateSearchResults(for searchController: UISearchController) {
-        // Get query text out of results
+    // Implement the searchbar button
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let resultsController = searchController.searchResultsController as? SearchResultsViewController,
-              let query = searchController.searchBar.text,
+              let query = searchBar.text,
               !query.trimmingCharacters(in: .whitespaces).isEmpty else {
             // Make sure it's not nil
             return
@@ -114,10 +119,12 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
                 }
             }
         }
-        
-        print(query)
     }
-  
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        // Get query text out of results
+        
+    }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
