@@ -119,7 +119,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             }
             let viewModel = SearchResulDefaultTableViewCellViewModel(
                 title: artist.name,
-                imageURL: nil)
+                imageURL: URL(string: artist.images?.first?.url ?? "")
+            )
             
             cell.configure(with: viewModel)
             return cell
