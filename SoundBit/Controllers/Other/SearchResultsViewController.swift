@@ -12,7 +12,15 @@ struct SearchSection {
     let results: [SearchResult]
 }
 
+//
+protocol SearchResultsViewControllerDelegate: AnyObject {
+    func showResult(_ controller: UIViewController)
+    
+}
+
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    weak var delegate: SearchResultsViewControllerDelegate?
 
     // Segment out the data in four different sections
     private var sections: [SearchSection] = []
@@ -73,13 +81,12 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             default: return false
             }
         })
+        
         self.sections = [
             SearchSection(title: "Songs", results: tracks),
             SearchSection(title: "Artists", results: artists),
             SearchSection(title: "Playlists", results: playlists),
             SearchSection(title: "Albums", results: albums)
-
-        
         ]
         tableview.reloadData()
         tableview.isHidden = results.isEmpty 
@@ -96,7 +103,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let result = sections[indexPath.section].results[indexPath.row]
         
-        
         let cell = tableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         switch result {
         // Associated cell
@@ -111,6 +117,26 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let result = sections[indexPath.section].results[indexPath.row]
+        switch result {
+        // Associated cell
+        case .artist(let model):
+            break
+        case .album(let model):
+            let vc = AlbumViewController(album: model)
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        case .track(let model):
+            break
+        case .playlist(let model):
+            let vc = PlaylistViewController(playlist: model)
+            delegate?.showResult(vc)
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

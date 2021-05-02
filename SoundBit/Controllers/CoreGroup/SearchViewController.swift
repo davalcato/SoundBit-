@@ -107,6 +107,10 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
             // Make sure it's not nil
             return
         }
+        // Assign the delegate
+        resultsController.delegate = self
+        
+        
         // Everytime a key is pressed
         APICaller.shared.search(
             with: query) { result in
@@ -123,8 +127,14 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
     
     func updateSearchResults(for searchController: UISearchController) {
         // Get query text out of results
-        
     }
+}
+
+extension SearchViewController: SearchResultsViewControllerDelegate {
+    func showResult(_ controller: UIViewController) {
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
