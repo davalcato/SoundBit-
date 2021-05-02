@@ -52,8 +52,33 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             default: return false
             }
         })
+        
+        let albums = results.filter({
+            switch $0 {
+            case .album: return true
+            default: return false
+            }
+        })
+        
+        let tracks = results.filter({
+            switch $0 {
+            case .track: return true
+            default: return false
+            }
+        })
+        
+        let playlists = results.filter({
+            switch $0 {
+            case .playlist: return true
+            default: return false
+            }
+        })
         self.sections = [
-            SearchSection(title: "Artists", results: artists)
+            SearchSection(title: "Songs", results: tracks),
+            SearchSection(title: "Artists", results: artists),
+            SearchSection(title: "Playlists", results: playlists),
+            SearchSection(title: "Albums", results: albums)
+
         
         ]
         tableview.reloadData()
@@ -76,13 +101,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         switch result {
         // Associated cell
         case .artist(let model):
-            cell.textLabel?.text = "Artist" + model.name
+            cell.textLabel?.text = model.name
         case .album(let model):
-            cell.textLabel?.text = "Album" + model.name
+            cell.textLabel?.text = model.name
         case .track(let model):
-            cell.textLabel?.text = "Track" + model.name
+            cell.textLabel?.text = model.name
         case .playlist(let model):
-            cell.textLabel?.text = "Playlist" + model.name
+            cell.textLabel?.text = model.name
         }
         
         return cell
