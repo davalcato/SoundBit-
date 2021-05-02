@@ -12,14 +12,14 @@ struct SearchSection {
     let results: [SearchResult]
 }
 
-//
+// Proxy back the call to the searchviewcontroller
 protocol SearchResultsViewControllerDelegate: AnyObject {
-    func showResult(_ controller: UIViewController)
+    func didTapResult(_ result: SearchResult)
     
 }
-
+// Just the results
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    // Via the delegate
     weak var delegate: SearchResultsViewControllerDelegate?
 
     // Segment out the data in four different sections
@@ -30,6 +30,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         // Give search a style of group
         let tableview = UITableView(frame: .zero, style: .grouped)
         tableview.backgroundColor = .systemBackground
+        // Register the cell
+        tableview.register(SearchResulDefaultTableViewCell.self, forCellReuseIdentifier: SearchResulDefaultTableViewCell.identifier)
         tableview.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         tableview.isHidden = true
@@ -103,40 +105,41 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let result = sections[indexPath.section].results[indexPath.row]
         
-        let cell = tableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let Acell = tableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
         switch result {
         // Associated cell
-        case .artist(let model):
-            cell.textLabel?.text = model.name
+        case .artist(let artist):
+            // Dequeue a cell for type
+            guard let cell = tableview.dequeueReusableCell(
+                    withIdentifier: SearchResulDefaultTableViewCell.identifier,
+                for: indexPath
+            ) as? SearchResulDefaultTableViewCell else {
+                return UITableViewCell()
+            }
+            let viewModel = SearchResulDefaultTableViewCellViewModel(
+                title: artist.name,
+                imageURL: nil)
+            
+            cell.configure(with: viewModel)
+            return cell
+            
         case .album(let model):
-            cell.textLabel?.text = model.name
+            Acell.textLabel?.text = model.name
         case .track(let model):
-            cell.textLabel?.text = model.name
+            Acell.textLabel?.text = "song"
+            
         case .playlist(let model):
-            cell.textLabel?.text = model.name
+            Acell.textLabel?.text = model.name
         }
         
-        return cell
+        return Acell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let result = sections[indexPath.section].results[indexPath.row]
-        switch result {
-        // Associated cell
-        case .artist(let model):
-            break
-        case .album(let model):
-            let vc = AlbumViewController(album: model)
-            vc.navigationItem.largeTitleDisplayMode = .never
-            navigationController?.pushViewController(vc, animated: true)
-        case .track(let model):
-            break
-        case .playlist(let model):
-            let vc = PlaylistViewController(playlist: model)
-            delegate?.showResult(vc)
-            
-        }
+        delegate?.didTapResult(result)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
