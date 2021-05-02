@@ -7,14 +7,20 @@
 
 import UIKit
 
+struct SearchSection {
+    let title: String
+    let results: [SearchResult]
+}
+
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
-    private var results: [SearchResult] = []
+    // Segment out the data in four different sections
+    private var sections: [SearchSection] = []
     
     // Use a customize tableView for the search
     private let tableview: UITableView = {
-        let tableview = UITableView()
+        // Give search a style of group
+        let tableview = UITableView(frame: .zero, style: .grouped)
         tableview.backgroundColor = .systemBackground
         tableview.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
@@ -39,20 +45,51 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func update(with results: [SearchResult]) {
-        self.results = results
+        // Filter out various types of results
+        let artists = results.filter({
+            switch $0 {
+            case .artist: return true
+            default: return false
+            }
+        })
+        self.sections = [
+            SearchSection(title: "Artists", results: artists)
+        
+        ]
         tableview.reloadData()
         tableview.isHidden = results.isEmpty 
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        results.count
+        return sections[section].results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let result = sections[indexPath.section].results[indexPath.row]
+        
+        
         let cell = tableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Foo"
+        switch result {
+        // Associated cell
+        case .artist(let model):
+            cell.textLabel?.text = "Artist" + model.name
+        case .album(let model):
+            cell.textLabel?.text = "Album" + model.name
+        case .track(let model):
+            cell.textLabel?.text = "Track" + model.name
+        case .playlist(let model):
+            cell.textLabel?.text = "Playlist" + model.name
+        }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].title
     }
 
 }
