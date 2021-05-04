@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class SearchResulDefaultTableViewCell: UITableViewCell {
+class SearchResultDefaultTableViewCell: UITableViewCell {
     static let identifier = "SearchResulDefaultTableViewCell"
     
     // Cell to have a single image and title
@@ -39,11 +39,14 @@ class SearchResulDefaultTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        let imageSize: CGFloat = contentView.height-10
         iconImageView.frame = CGRect(
             x: 10,
-            y: 0,
-            width: contentView.height,
-            height: contentView.height)
+            y: 5,
+            width: imageSize,
+            height: imageSize)
+        iconImageView.layer.cornerRadius = imageSize/2
+        iconImageView.layer.masksToBounds = true
         label.frame = CGRect(
             x: iconImageView.right+10,
             y: 0,
@@ -62,7 +65,6 @@ class SearchResulDefaultTableViewCell: UITableViewCell {
         iconImageView.sd_setImage(
             with: viewModel.imageURL,
             completed: nil)
-        
     }
     
 }
