@@ -47,6 +47,9 @@ class AlbumViewController: UIViewController {
     // ViewModel array on the init
     private var viewModels = [AlbumCollectionViewCellViewModel]()
     
+    // Create tracks collection
+    private var tracks = [AudioTrack]()
+    
     private let album: Album
     
     init(album: Album) {
@@ -79,7 +82,10 @@ class AlbumViewController: UIViewController {
         APICaller.shared.getAlbumDetails(for: album) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
+                // Fetch the album of the tracks
                 case .success(let model):
+                    // Save the track directly
+                    self?.tracks = model.tracks.items
                     self?.viewModels = model.tracks.items.compactMap({
                         AlbumCollectionViewCellViewModel(
                             name: $0.name,
@@ -144,18 +150,16 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
     // Tap on cell here
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        
-        
-        // Play song
-        
+        // Tap onto rows
+        let track = tracks[indexPath.row]
+        PlaybackPresenter.startPlayback(from: self, track: track)
     }
-    
 }
 // Conform to the protocol
 extension AlbumViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func PlaylistHeaderCollectionReusableViewDidTapPlayAll(_ header: PlaylistHeaderCollectionReusableView) {
-        // Start all of play list in queue
-        print("Playing all")
+        // Playback of a collection 
+        PlaybackPresenter.startPlayback(from: self, tracks: tracks)
     }
     
 }

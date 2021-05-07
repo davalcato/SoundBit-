@@ -58,6 +58,9 @@ class PlaylistViewController: UIViewController {
     // ViewModel array on the init
     private var viewModels = [RecommendedTrackCellViewModel]()
     
+    // Collection of Audiotracks
+    private var tracks = [AudioTrack]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = playlist.name
@@ -80,8 +83,8 @@ class PlaylistViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
-                    
                     // RecommendedTrackCellViewModel
+                    self?.tracks = model.tracks.items.compactMap({ $0.track })
                     self?.viewModels = model.tracks.items.compactMap({
                         RecommendedTrackCellViewModel(
                             name: $0.track.name,
@@ -115,8 +118,6 @@ class PlaylistViewController: UIViewController {
         present(vc, animated: true)
         
     }
-    
-    
     // Give collectionview a frame
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -167,9 +168,11 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
     // Tap on cell here
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        
-        
-        // Play song
+        // Track for this playlist
+        let index = indexPath.row
+        // Select a cell in playlist
+        let track = tracks[index]
+        PlaybackPresenter.startPlayback(from: self, track: track)
         
     }
     
@@ -177,8 +180,10 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
 // Conform to the protocol
 extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func PlaylistHeaderCollectionReusableViewDidTapPlayAll(_ header: PlaylistHeaderCollectionReusableView) {
-        // Start all of play list in queue
-        print("Playing all")
+        // Send a collection of tracks to player
+        PlaybackPresenter.startPlayback(
+            from: self,
+            tracks: tracks
+        )
     }
-    
 }
