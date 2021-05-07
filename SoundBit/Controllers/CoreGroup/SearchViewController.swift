@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
@@ -135,7 +136,14 @@ extension SearchViewController: SearchResultsViewControllerDelegate {
         switch result {
         // Associated cell
         case .artist(let model):
-            break
+            guard let url = URL(string: model.external_urls["spotify"] ?? "" ) else {
+                
+                return
+            }
+            // Open up inapp webview
+        let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
+        
         case .album(let model):
             let vc = AlbumViewController(album: model)
             vc.navigationItem.largeTitleDisplayMode = .never

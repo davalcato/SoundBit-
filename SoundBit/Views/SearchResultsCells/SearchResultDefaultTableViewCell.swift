@@ -44,7 +44,9 @@ class SearchResultDefaultTableViewCell: UITableViewCell {
             x: 10,
             y: 5,
             width: imageSize,
-            height: imageSize)
+            height: imageSize
+        )
+        
         iconImageView.layer.cornerRadius = imageSize/2
         iconImageView.layer.masksToBounds = true
         label.frame = CGRect(
