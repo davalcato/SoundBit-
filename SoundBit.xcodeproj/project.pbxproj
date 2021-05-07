@@ -29,6 +29,7 @@
 		75A666EB25E8BA59004EB157 /* NewReleasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EA25E8BA58004EB157 /* NewReleasesResponse.swift */; };
 		75A666ED25E8BE86004EB157 /* APIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EC25E8BE86004EB157 /* APIImage.swift */; };
 		75A9474F25F5B59E006D8FF8 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A9474E25F5B59E006D8FF8 /* AlbumViewController.swift */; };
+		75BDD9872644C0ED00D65941 /* PlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BDD9862644C0ED00D65941 /* PlaybackPresenter.swift */; };
 		75CAD6BD25E74FE90040685E /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CAD6BC25E74FE90040685E /* SettingsModels.swift */; };
 		75CC200D25E1F427001D9242 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CC200C25E1F427001D9242 /* AppDelegate.swift */; };
 		75CC200F25E1F427001D9242 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CC200E25E1F427001D9242 /* SceneDelegate.swift */; };
@@ -125,6 +126,7 @@
 		75A666EA25E8BA58004EB157 /* NewReleasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesResponse.swift; sourceTree = "<group>"; };
 		75A666EC25E8BE86004EB157 /* APIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIImage.swift; sourceTree = "<group>"; };
 		75A9474E25F5B59E006D8FF8 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
+		75BDD9862644C0ED00D65941 /* PlaybackPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPresenter.swift; sourceTree = "<group>"; };
 		75CAD6BC25E74FE90040685E /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
 		75CC200925E1F427001D9242 /* SoundBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75CC200C25E1F427001D9242 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +204,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		75BDD9852644C09D00D65941 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				75BDD9862644C0ED00D65941 /* PlaybackPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		75CC200025E1F427001D9242 = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +237,7 @@
 		75CC200B25E1F427001D9242 /* SoundBit */ = {
 			isa = PBXGroup;
 			children = (
+				75BDD9852644C09D00D65941 /* Presenter */,
 				75CC204325E1FA57001D9242 /* Resources */,
 				75CC204225E1FA35001D9242 /* Managers */,
 				75CC204125E1FA1F001D9242 /* ViewModels */,
@@ -722,6 +733,7 @@
 				75F22B4D25E31FE800E384B7 /* Extensions.swift in Sources */,
 				7527BD61260BCD1C007D1976 /* PlaylistHeaderCollectionReusableView.swift in Sources */,
 				75CC200D25E1F427001D9242 /* AppDelegate.swift in Sources */,
+				75BDD9872644C0ED00D65941 /* PlaybackPresenter.swift in Sources */,
 				75F22B4925E2049E00E384B7 /* Artist.swift in Sources */,
 				75CAD6BD25E74FE90040685E /* SettingsModels.swift in Sources */,
 				7527BD65260BD5D5007D1976 /* PlaylistHeaderViewModel.swift in Sources */,
