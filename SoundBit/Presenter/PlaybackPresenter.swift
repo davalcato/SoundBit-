@@ -17,7 +17,9 @@ final class PlaybackPresenter {
         ) {
         // Insatiate the viewcontroller
         let vc = PlayerViewController()
-        viewController.present(vc, animated: true, completion: nil)
+        vc.title = track.name
+        // Wrapped in a navigationController
+        viewController.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     
     static func startPlayback(
@@ -27,8 +29,9 @@ final class PlaybackPresenter {
         // Create the player viewcontroller
         ) {
         let vc = PlayerViewController()
-        viewController.present(vc, animated: true, completion: nil)
-    }
+        viewController.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+        
+        }
         
     }
 
