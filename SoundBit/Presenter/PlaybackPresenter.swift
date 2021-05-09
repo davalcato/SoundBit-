@@ -24,11 +24,14 @@ final class PlaybackPresenter {
         from viewController: UIViewController,
         // Collections of multiple tracks 
         tracks: [AudioTrack]
-                              
+        // Create the player viewcontroller
         ) {
+        let vc = PlayerViewController()
+        viewController.present(vc, animated: true, completion: nil)
+    }
         
     }
-}
+
 
 
 
