@@ -30,6 +30,7 @@
 		75A666ED25E8BE86004EB157 /* APIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A666EC25E8BE86004EB157 /* APIImage.swift */; };
 		75A9474F25F5B59E006D8FF8 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A9474E25F5B59E006D8FF8 /* AlbumViewController.swift */; };
 		75BDD9872644C0ED00D65941 /* PlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BDD9862644C0ED00D65941 /* PlaybackPresenter.swift */; };
+		75C22215264853FB0030F93A /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C22214264853FB0030F93A /* PlayerControlsView.swift */; };
 		75CAD6BD25E74FE90040685E /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CAD6BC25E74FE90040685E /* SettingsModels.swift */; };
 		75CC200D25E1F427001D9242 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CC200C25E1F427001D9242 /* AppDelegate.swift */; };
 		75CC200F25E1F427001D9242 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CC200E25E1F427001D9242 /* SceneDelegate.swift */; };
@@ -127,6 +128,7 @@
 		75A666EC25E8BE86004EB157 /* APIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIImage.swift; sourceTree = "<group>"; };
 		75A9474E25F5B59E006D8FF8 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		75BDD9862644C0ED00D65941 /* PlaybackPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPresenter.swift; sourceTree = "<group>"; };
+		75C22214264853FB0030F93A /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
 		75CAD6BC25E74FE90040685E /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
 		75CC200925E1F427001D9242 /* SoundBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75CC200C25E1F427001D9242 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				758C8AFB262B721400AEA864 /* AlbumTrackCollectionViewCell.swift */,
 				758C8AFD262B77D200AEA864 /* AlbumCollectionViewCellViewModel.swift */,
 				758C8AFF262CD40400AEA864 /* GenreCollectionViewCell.swift */,
+				75C22214264853FB0030F93A /* PlayerControlsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				75F22B4325E2041300E384B7 /* HapticsManager.swift in Sources */,
 				75F22B4F25E4A25200E384B7 /* AuthResponse.swift in Sources */,
 				75F22B4725E2048300E384B7 /* AudioTrack.swift in Sources */,
+				75C22215264853FB0030F93A /* PlayerControlsView.swift in Sources */,
 				758C8B00262CD40400AEA864 /* GenreCollectionViewCell.swift in Sources */,
 				75DCA4002635E3B600A63910 /* SearchResult.swift in Sources */,
 				752A4D482641FC0C006AFC8B /* SearchResultSubtitleTableViewCell.swift in Sources */,
