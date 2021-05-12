@@ -23,6 +23,7 @@ final class PlayerControlsView: UIView {
     // Two labels
     private let namelabel: UILabel = {
         let label = UILabel()
+        label.text = "Your song"
         label.numberOfLines = 1
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
@@ -30,6 +31,7 @@ final class PlayerControlsView: UIView {
     
     private let subtitlelabel: UILabel = {
         let label = UILabel()
+        label.text = "Sade (feat. Snoop Dogg)"
         label.numberOfLines = 1
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textColor = .secondaryLabel
@@ -94,7 +96,7 @@ final class PlayerControlsView: UIView {
             width: width,
             height: 50)
         
-        namelabel.frame = CGRect(
+        subtitlelabel.frame = CGRect(
             x: 0,
             y: namelabel.bottom+10,
             width: width,
@@ -102,7 +104,7 @@ final class PlayerControlsView: UIView {
         
         volumeSlider.frame = CGRect(
             x: 10,
-            y: subtitlelabel.bottom+20,
+            y: subtitlelabel.bottom+40,
             width: width-20,
             height: 44)
         
