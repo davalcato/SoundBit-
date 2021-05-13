@@ -12,20 +12,21 @@ class PlayerViewController: UIViewController {
     // Adding a single view
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .systemBlue
         
         return imageView
     }()
     
     // Adding the PlayerControlsView to the UI
-    private let controlView = PlayerControlsView()
+    private let controlsView = PlayerControlsView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(imageView)
-        view.addSubview(controlView)
+        view.addSubview(controlsView)
+        controlsView.delegate = self
         configureBarButtons()
         
     }
@@ -40,7 +41,7 @@ class PlayerViewController: UIViewController {
             width: view.width,
             height: view.width)
         
-        controlView.frame = CGRect(
+        controlsView.frame = CGRect(
             x: 10,
             y: imageView.bottom+10,
             width: view.width-20,
@@ -68,7 +69,23 @@ class PlayerViewController: UIViewController {
     // Bring up the actionsheet
     @objc private func didTapAction() {
         //
+    }
+}
+
+// Conformed to the protocol PlayerViewController
+extension PlayerViewController: PlayerControlsViewDelegate {
+    func PlayerControlsViewDidTapPlayPauseButton(_ playerControlsView: PlayerControlsView) {
         
     }
-
+    
+    func PlayerControlsViewDidTapForwardButton(_ playerControlsView: PlayerControlsView) {
+        
+    }
+    
+    func PlayerControlsViewDidTapBackwardsButton(_ playerControlsView: PlayerControlsView) {
+        
+    }
+    
+    
+    
 }

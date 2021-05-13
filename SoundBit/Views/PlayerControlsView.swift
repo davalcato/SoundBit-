@@ -8,16 +8,23 @@
 import Foundation
 import UIKit
 
+// Delegate to relay the button taps to the control (hold in weak - AnyObject)
+protocol PlayerControlsViewDelegate: AnyObject {
+    func PlayerControlsViewDidTapPlayPauseButton(_ playerControlsView: PlayerControlsView)
+    func PlayerControlsViewDidTapForwardButton(_ playerControlsView: PlayerControlsView)
+    func PlayerControlsViewDidTapBackwardsButton(_ playerControlsView: PlayerControlsView)
+}
+
 final class PlayerControlsView: UIView {
+    
+    weak var delegate: PlayerControlsViewDelegate?
     
     // Create slide
     private let volumeSlider: UISlider = {
         let slider = UISlider()
         // The value of slider
         slider.value = 0.5
-        
         return slider
-        
     }()
     
     // Two labels
@@ -71,7 +78,7 @@ final class PlayerControlsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+        backgroundColor = .clear
         addSubview(namelabel)
         addSubview(subtitlelabel)
         
@@ -81,11 +88,29 @@ final class PlayerControlsView: UIView {
         addSubview(nextButton)
         addSubview(playPauseButton)
         
+        // Add targets to our buttons
+        backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(didTapNext), for: .touchUpInside)
+        playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
+        
         clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    // Define the buttons delegate functions
+    @objc private func didTapBack() {
+        delegate?.PlayerControlsViewDidTapBackwardsButton(self)
+    }
+    
+    @objc private func didTapNext() {
+        delegate?.PlayerControlsViewDidTapForwardButton(self)
+    }
+    
+    @objc private func didTapPlayPause() {
+        delegate?.PlayerControlsViewDidTapPlayPauseButton(self)
     }
     
     override func layoutSubviews() {
