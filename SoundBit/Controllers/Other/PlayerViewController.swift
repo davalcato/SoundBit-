@@ -55,7 +55,9 @@ class PlayerViewController: UIViewController {
     // Pulls in the imageView provided by the datasource
     private func configure() {
         imageView.sd_setImage(with: dataSource?.imageURL, completed: nil)
-        
+        // Configure the controlview with the viewModel
+        controlsView.configure(with: PlayerControlsViewViewModel(title: dataSource?.songName, subtitle: dataSource?.subtitle)
+        )
     }
     
     // Add function

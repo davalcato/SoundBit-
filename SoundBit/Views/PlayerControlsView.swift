@@ -15,6 +15,13 @@ protocol PlayerControlsViewDelegate: AnyObject {
     func PlayerControlsViewDidTapBackwardsButton(_ playerControlsView: PlayerControlsView)
 }
 
+// Create a related view model
+struct PlayerControlsViewViewModel {
+    // two screens on it
+    let title: String?
+    let subtitle: String?
+}
+
 final class PlayerControlsView: UIView {
     
     weak var delegate: PlayerControlsViewDelegate?
@@ -153,9 +160,17 @@ final class PlayerControlsView: UIView {
             y: playPauseButton.top,
             width: buttonSize,
             height: buttonSize)
-        
+    }
+    
+    // The PlayerControlsViewViewModel function
+    func configure(with viewModel: PlayerControlsViewViewModel) {
+        namelabel.text = viewModel.title
+        subtitlelabel.text = viewModel.subtitle
     }
 }
+
+
+
 
 
 
