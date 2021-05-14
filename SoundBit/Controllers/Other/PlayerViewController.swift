@@ -8,11 +8,21 @@
 import UIKit
 import SDWebImage
 
+// Define the protocol - AnyObject to hold in a weak way
+protocol PlayerViewControllerDelegate: AnyObject {
+    // Three functions
+    func didTapPlayPause()
+    func didTapForward()
+    func didTapBackward()
+    
+}
+
 class PlayerViewController: UIViewController {
     
     // An instance of the dataSource
     weak var dataSource: PlayerDataSource?
-    
+    // Connect the play buttons
+    weak var delegate: PlayerViewControllerDelegate?
     // Adding a single view
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -87,15 +97,16 @@ class PlayerViewController: UIViewController {
 // Conformed to the protocol PlayerViewController
 extension PlayerViewController: PlayerControlsViewDelegate {
     func PlayerControlsViewDidTapPlayPauseButton(_ playerControlsView: PlayerControlsView) {
+        delegate?.didTapPlayPause()
         
     }
     
     func PlayerControlsViewDidTapForwardButton(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapForward()
     }
     
     func PlayerControlsViewDidTapBackwardsButton(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapBackward()
     }
     
     

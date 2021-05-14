@@ -5,6 +5,7 @@
 //  Created by Daval Cato on 5/6/21.
 //
 
+import AVFoundation
 import Foundation
 import UIKit
 
@@ -34,28 +35,46 @@ final class PlaybackPresenter {
         else if !tracks.isEmpty {
             // Go ahead and return first track
             return tracks.first
-            
         }
         return nil
     }
+    
+    // Create an optional player
+    var player: AVPlayer?
     
     func startPlayback(
         from viewController: UIViewController,
         track: AudioTrack
         ) {
+        // Else to coalesce to an empty string
+        guard let url = URL(string: track.preview_url ?? "") else {
+            
+            // If it fails we return
+            return
+        }
+        
+        // AVPlayer is created with url
+        player = AVPlayer(url: url)
+        player?.volume = 0.5
+        
         // The opposite
         self.track = track
         self.tracks = []
-        
         // Insatiate the viewcontroller
         let vc = PlayerViewController()
         vc.title = track.name
         
         // Every time we create a datasource
         vc.dataSource = self
+        // Connecting the play buttons
+        vc.delegate = self
         
         // Wrapped in a navigationController
-        viewController.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+        viewController.present(UINavigationController(rootViewController: vc), animated: true) { [weak self] in
+            // In this completion block we start playing the audio
+            self?.player?.play()
+            
+        }
     }
     
      func startPlayback(
@@ -74,6 +93,45 @@ final class PlaybackPresenter {
         }
         
     }
+
+// Conform to the protocol PlayerViewControllerDelegate
+extension PlaybackPresenter: PlayerViewControllerDelegate {
+    // Three functions
+    func didTapPlayPause() {
+        // Check if there's a player
+        if let player = player {
+            if player.timeControlStatus == .playing {
+                player.pause()
+            }
+            else if player.timeControlStatus == .paused {
+                player.play()
+                
+            }
+        }
+    }
+    
+    func didTapForward() {
+        if tracks.isEmpty {
+            // Not playlist or album
+            player?.pause()
+            
+        }
+        else {
+            
+        }
+    }
+    
+    func didTapBackward() {
+        if tracks.isEmpty {
+            // Not playlist or album
+            player?.pause()
+            player?.play()
+        }
+        else {
+            
+        }
+    }
+}
 
 extension PlaybackPresenter: PlayerDataSource {
     var songName: String? {

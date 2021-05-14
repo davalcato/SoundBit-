@@ -24,6 +24,9 @@ struct PlayerControlsViewViewModel {
 
 final class PlayerControlsView: UIView {
     
+    // Add a muted property
+    private var isPlaying = true
+    
     weak var delegate: PlayerControlsViewDelegate?
     
     // Create slide
@@ -117,7 +120,19 @@ final class PlayerControlsView: UIView {
     }
     
     @objc private func didTapPlayPause() {
+        self.isPlaying = !isPlaying
         delegate?.PlayerControlsViewDidTapPlayPauseButton(self)
+        
+        // Update the icon
+        let pause = UIImage(systemName: "pause", withConfiguration: UIImage.SymbolConfiguration(
+                                pointSize: 34,
+                                weight: .regular))
+        
+        let play = UIImage(systemName: "play.fill", withConfiguration: UIImage.SymbolConfiguration(
+                                pointSize: 34,
+                                weight: .regular))
+        
+        playPauseButton.setImage(isPlaying ? pause : play, for: .normal)
     }
     
     override func layoutSubviews() {
