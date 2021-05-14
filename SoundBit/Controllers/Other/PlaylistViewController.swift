@@ -172,7 +172,7 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
         let index = indexPath.row
         // Select a cell in playlist
         let track = tracks[index]
-        PlaybackPresenter.startPlayback(from: self, track: track)
+        PlaybackPresenter.shared.startPlayback(from: self, track: track)
         
     }
     
@@ -181,7 +181,7 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
 extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func PlaylistHeaderCollectionReusableViewDidTapPlayAll(_ header: PlaylistHeaderCollectionReusableView) {
         // Send a collection of tracks to player
-        PlaybackPresenter.startPlayback(
+        PlaybackPresenter.shared.startPlayback(
             from: self,
             tracks: tracks
         )

@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PlayerViewController: UIViewController {
+    
+    // An instance of the dataSource
+    weak var dataSource: PlayerDataSource?
     
     // Adding a single view
     private let imageView: UIImageView = {
@@ -28,6 +32,7 @@ class PlayerViewController: UIViewController {
         view.addSubview(controlsView)
         controlsView.delegate = self
         configureBarButtons()
+        configure()
         
     }
     
@@ -46,6 +51,11 @@ class PlayerViewController: UIViewController {
             y: imageView.bottom+10,
             width: view.width-20,
             height: view.height-imageView.height-view.safeAreaInsets.top-view.safeAreaInsets.bottom-15)
+    }
+    // Pulls in the imageView provided by the datasource
+    private func configure() {
+        imageView.sd_setImage(with: dataSource?.imageURL, completed: nil)
+        
     }
     
     // Add function
