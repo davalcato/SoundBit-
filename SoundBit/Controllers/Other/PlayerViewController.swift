@@ -28,8 +28,6 @@ class PlayerViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .systemBlue
-        
         return imageView
     }()
     
@@ -92,6 +90,11 @@ class PlayerViewController: UIViewController {
     // Bring up the actionsheet
     @objc private func didTapAction() {
         //
+    }
+    // Add refreshUI function
+    func refreshUI() {
+        // Takes the datasource
+        configure()
     }
 }
 

@@ -24,6 +24,9 @@ final class PlaybackPresenter {
     private var track: AudioTrack?
     private var tracks = [AudioTrack]()
     
+    // Hold an index to forward to the next song
+    var index = 0
+    
     // Computed property
     var currentTrack: AudioTrack? {
         // Unwrap the track up above
@@ -33,20 +36,12 @@ final class PlaybackPresenter {
         }
         // Return the current playing item
         else if let player = self.playerQueue, !tracks.isEmpty {
-            // The item wanted is currentItem
-            let item = player.currentItem
-            // Then get list
-            let items = player.items()
-            // Find the index item
-            guard let index = items.firstIndex(where: { $0 == item }) else {
-                // If we're not able to find then current item is nil
-                return nil
-            }
-            // If we do find the index
             return tracks[index]
         }
         return nil
     }
+    // Player reference
+    var playerVC: PlayerViewController?
     
     // Create an optional player
     var player: AVPlayer?
@@ -72,7 +67,6 @@ final class PlaybackPresenter {
         // Insatiate the viewcontroller
         let vc = PlayerViewController()
         vc.title = track.name
-        
         // Every time we create a datasource
         vc.dataSource = self
         // Connecting the play buttons
@@ -83,13 +77,14 @@ final class PlaybackPresenter {
             // In this completion block we start playing the audio
             self?.player?.play()
         }
+        // Reference to the controller
+        self.playerVC = vc
     }
     
      func startPlayback(
         from viewController: UIViewController,
         // Collections of multiple tracks 
         tracks: [AudioTrack]
-        // Create the player viewcontroller
         ) {
         // When we call either function
         self.tracks = tracks
@@ -97,7 +92,6 @@ final class PlaybackPresenter {
        
         // Play songs in sequence
         self.playerQueue = AVQueuePlayer(items: tracks.compactMap({
-            // Instantiate AVPlayerItem
             // Create the URL
             guard let url = URL(string: $0.preview_url ?? "") else {
                 // Else coalesce into empty string if nil
@@ -114,10 +108,11 @@ final class PlaybackPresenter {
         // Connecting the play buttons
         vc.delegate = self
         viewController.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
-        
+        // Reference to the controller
+        self.playerVC = vc
         }
-        
     }
+
 // Conform to the protocol PlayerViewControllerDelegate
 extension PlaybackPresenter: PlayerViewControllerDelegate {
     // Three functions
@@ -141,7 +136,6 @@ extension PlaybackPresenter: PlayerViewControllerDelegate {
             }
         }
     }
-    
     func didTapForward() {
         if tracks.isEmpty {
             // Not playlist or album
@@ -149,7 +143,12 @@ extension PlaybackPresenter: PlayerViewControllerDelegate {
         }
         // Check if we have a non-nil playerQueue
         else if let player = playerQueue {
-            playerQueue?.advanceToNextItem()
+            player.advanceToNextItem()
+            // Increment the index on the UI
+            index += 1
+            print(index)
+            // Go to next song
+            playerVC?.refreshUI()
         }
     }
     
