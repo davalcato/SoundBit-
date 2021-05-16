@@ -47,7 +47,7 @@ class AlbumViewController: UIViewController {
     // ViewModel array on the init
     private var viewModels = [AlbumCollectionViewCellViewModel]()
     
-    // Create tracks collection
+    // Create tracks collection - Array of AudioTrack
     private var tracks = [AudioTrack]()
     
     private let album: Album
@@ -151,14 +151,22 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         // Tap onto rows
-        let track = tracks[indexPath.row]
+        var track = tracks[indexPath.row]
+        track.album = self.album
         PlaybackPresenter.shared.startPlayback(from: self, track: track)
     }
 }
 // Conform to the protocol
 extension AlbumViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func PlaylistHeaderCollectionReusableViewDidTapPlayAll(_ header: PlaylistHeaderCollectionReusableView) {
-        // Playback of a collection 
+        let tracksWithAlbum: [AudioTrack] = tracks.compactMap({
+            // Taking the current track
+            var track = $0
+            // Sticking on the current album of the controller
+            track.album = self.album
+            return track
+        })
+        // Playback of a collection
         PlaybackPresenter.shared.startPlayback(from: self, tracks: tracks)
     }
     

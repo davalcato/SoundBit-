@@ -44,7 +44,6 @@ final class PlaybackPresenter {
             }
             // If we do find the index
             return tracks[index]
-            
         }
         return nil
     }
@@ -63,7 +62,6 @@ final class PlaybackPresenter {
             // If it fails we return
             return
         }
-        
         // AVPlayer is created with url
         player = AVPlayer(url: url)
         player?.volume = 0.5
@@ -187,6 +185,7 @@ extension PlaybackPresenter: PlayerDataSource {
     }
     
     var imageURL: URL? {
+        print("Images: \(currentTrack?.album?.images.first)")
         return URL(string: currentTrack?.album?.images.first?.url ?? "")
         
     }
