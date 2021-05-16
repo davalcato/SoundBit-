@@ -14,6 +14,7 @@ protocol PlayerViewControllerDelegate: AnyObject {
     func didTapPlayPause()
     func didTapForward()
     func didTapBackward()
+    func didSlideSlider(_ value: Float)
     
 }
 
@@ -33,7 +34,7 @@ class PlayerViewController: UIViewController {
     }()
     
     // Adding the PlayerControlsView to the UI
-    private let controlsView = PlayerControlsView()
+    private let controlsView = SoundBit.PlayerControlsView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +110,9 @@ extension PlayerViewController: PlayerControlsViewDelegate {
         delegate?.didTapBackward()
     }
     
+    func PlayerControlsView(_ playerControlsView: PlayerControlsView, didSlideSlider value: Float) {
+        delegate?.didSlideSlider(value)
     
-    
+
+    }
 }

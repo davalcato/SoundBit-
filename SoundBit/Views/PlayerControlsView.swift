@@ -13,6 +13,7 @@ protocol PlayerControlsViewDelegate: AnyObject {
     func PlayerControlsViewDidTapPlayPauseButton(_ playerControlsView: PlayerControlsView)
     func PlayerControlsViewDidTapForwardButton(_ playerControlsView: PlayerControlsView)
     func PlayerControlsViewDidTapBackwardsButton(_ playerControlsView: PlayerControlsView)
+    func PlayerControlsView(_ playerControlsView: PlayerControlsView, didSlideSlider value: Float)
 }
 
 // Create a related view model
@@ -93,6 +94,7 @@ final class PlayerControlsView: UIView {
         addSubview(subtitlelabel)
         
         addSubview(volumeSlider)
+        volumeSlider.addTarget(self, action: #selector(didSlideSlider), for: .valueChanged)
         
         addSubview(backButton)
         addSubview(nextButton)
@@ -108,6 +110,13 @@ final class PlayerControlsView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    // Create function of volumeSlider
+    @objc func didSlideSlider(_ slider: UISlider) {
+        let value = slider.value
+        delegate?.PlayerControlsView(self, didSlideSlider: value)
+        
     }
     
     // Define the buttons delegate functions

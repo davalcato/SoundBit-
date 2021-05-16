@@ -31,16 +31,28 @@ final class PlaybackPresenter {
             // Return if empty
             return track
         }
-        // Otherwise the tracks collections is not empty
-        else if !tracks.isEmpty {
-            // Go ahead and return first track
-            return tracks.first
+        // Return the current playing item
+        else if let player = self.playerQueue, !tracks.isEmpty {
+            // The item wanted is currentItem
+            let item = player.currentItem
+            // Then get list
+            let items = player.items()
+            // Find the index item
+            guard let index = items.firstIndex(where: { $0 == item }) else {
+                // If we're not able to find then current item is nil
+                return nil
+            }
+            // If we do find the index
+            return tracks[index]
+            
         }
         return nil
     }
     
     // Create an optional player
     var player: AVPlayer?
+    // Play tracks in a queue
+    var playerQueue: AVQueuePlayer?
     
     func startPlayback(
         from viewController: UIViewController,
@@ -48,7 +60,6 @@ final class PlaybackPresenter {
         ) {
         // Else to coalesce to an empty string
         guard let url = URL(string: track.preview_url ?? "") else {
-            
             // If it fails we return
             return
         }
@@ -73,7 +84,6 @@ final class PlaybackPresenter {
         viewController.present(UINavigationController(rootViewController: vc), animated: true) { [weak self] in
             // In this completion block we start playing the audio
             self?.player?.play()
-            
         }
     }
     
@@ -86,14 +96,30 @@ final class PlaybackPresenter {
         // When we call either function
         self.tracks = tracks
         self.track = nil
+       
+        // Play songs in sequence
+        self.playerQueue = AVQueuePlayer(items: tracks.compactMap({
+            // Instantiate AVPlayerItem
+            // Create the URL
+            guard let url = URL(string: $0.preview_url ?? "") else {
+                // Else coalesce into empty string if nil
+                return nil
+            }
+            return AVPlayerItem(url: url)
+        }))
+        self.playerQueue?.volume = 0
+        self.playerQueue?.play()
         
         let vc = PlayerViewController()
+        // Every time we create a datasource
+        vc.dataSource = self
+        // Connecting the play buttons
+        vc.delegate = self
         viewController.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
         
         }
         
     }
-
 // Conform to the protocol PlayerViewControllerDelegate
 extension PlaybackPresenter: PlayerViewControllerDelegate {
     // Three functions
@@ -105,7 +131,15 @@ extension PlaybackPresenter: PlayerViewControllerDelegate {
             }
             else if player.timeControlStatus == .paused {
                 player.play()
-                
+            }
+        }
+        else if let player = playerQueue {
+            // Figure out if this player is playing
+            if player.timeControlStatus == .playing {
+                player.pause()
+            }
+            else if player.timeControlStatus == .paused {
+                player.play()
             }
         }
     }
@@ -114,10 +148,10 @@ extension PlaybackPresenter: PlayerViewControllerDelegate {
         if tracks.isEmpty {
             // Not playlist or album
             player?.pause()
-            
         }
-        else {
-            
+        // Check if we have a non-nil playerQueue
+        else if let player = playerQueue {
+            playerQueue?.advanceToNextItem()
         }
     }
     
@@ -127,9 +161,18 @@ extension PlaybackPresenter: PlayerViewControllerDelegate {
             player?.pause()
             player?.play()
         }
-        else {
-            
+        else if let firstItem = playerQueue?.items().first {
+            playerQueue?.pause()
+            playerQueue?.removeAllItems()
+            playerQueue = AVQueuePlayer(items: [firstItem])
+            playerQueue?.play()
+            // Reset volume
+            playerQueue?.volume = 0.8
         }
+    }
+    
+    func didSlideSlider(_ value: Float) {
+        player?.volume = value
     }
 }
 
