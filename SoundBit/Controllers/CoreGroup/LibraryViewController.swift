@@ -30,6 +30,13 @@ class LibraryViewController: UIViewController {
         view.addSubview(scrollView)
         // Background color on scrollview
         scrollView.backgroundColor = .yellow
+        // Add swipe
+        scrollView.contentSize = CGSize(
+            width: view.width*2,
+            height: scrollView.height)
+        
+        // Add children
+        addChildren()
         
     }
     
@@ -41,6 +48,21 @@ class LibraryViewController: UIViewController {
             width: view.width,
             height: view.height-view.safeAreaInsets.top-view.safeAreaInsets.bottom-55
         )
+    }
+    
+    // Implementing the children
+    private func addChildren() {
+        addChild(playlistsVC)
+        // Allows view lifecycle functions to work on playlist
+        scrollView.addSubview(playlistsVC.view)
+        // Views frame
+        playlistsVC.view.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: scrollView.width,
+            height: scrollView.height)
+        // Did become child of parent
+        playlistsVC.didMove(toParent: self)
     }
 }
 
