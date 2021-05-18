@@ -21,15 +21,18 @@ class LibraryViewController: UIViewController {
         return scrollView
     }()
     
+    // Create instance of LibraryToggleView
+    private let toggleView = LibraryToggleView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        view.addSubview(toggleView)
         // Set the delegate for the scrollview
         scrollView.delegate = self
         
         view.addSubview(scrollView)
-        // Background color on scrollview
-        scrollView.backgroundColor = .yellow
+    
         // Add swipe
         scrollView.contentSize = CGSize(
             width: view.width*2,
@@ -48,6 +51,12 @@ class LibraryViewController: UIViewController {
             width: view.width,
             height: view.height-view.safeAreaInsets.top-view.safeAreaInsets.bottom-55
         )
+        // Toggle frame
+        toggleView.frame = CGRect(
+            x: 0,
+            y: view.safeAreaInsets.top,
+            width: 200,
+            height: 55)
     }
     
     // Implementing the children
@@ -63,6 +72,18 @@ class LibraryViewController: UIViewController {
             height: scrollView.height)
         // Did become child of parent
         playlistsVC.didMove(toParent: self)
+        
+        addChild(albumsVC)
+        // Allows view lifecycle functions to work on playlist
+        scrollView.addSubview(albumsVC.view)
+        // Views frame
+        albumsVC.view.frame = CGRect(
+            x: view.width,
+            y: 0,
+            width: scrollView.width,
+            height: scrollView.height)
+        // Did become child of parent
+        albumsVC.didMove(toParent: self)
     }
 }
 
