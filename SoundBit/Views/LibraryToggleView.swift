@@ -7,7 +7,17 @@
 
 import UIKit
 
+// Delegate for tap event
+protocol LibraryToggleViewDelegate: AnyObject {
+    func LibraryToggleViewDidTapPlaylists(_ toggleView: LibraryToggleView)
+    func LibraryToggleViewDidTapAlbums(_ toggleView: LibraryToggleView)
+    
+}
+
 class LibraryToggleView: UIView {
+    
+    // Weak reference to delegate
+    weak var delegate: LibraryToggleViewDelegate?
     
     // Two buttons
     private let playlistButton: UIButton = {
@@ -28,7 +38,6 @@ class LibraryToggleView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         addSubview(playlistButton)
         addSubview(albumsButton)
         
@@ -47,12 +56,12 @@ class LibraryToggleView: UIView {
     }
     
     @objc private func didTapPlaylists() {
-        
+        delegate?.LibraryToggleViewDidTapPlaylists(self)
         
     }
     
     @objc private func didTapAlbums() {
-        
+        delegate?.LibraryToggleViewDidTapAlbums(self)
         
     }
     

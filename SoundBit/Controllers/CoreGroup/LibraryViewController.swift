@@ -28,6 +28,9 @@ class LibraryViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(toggleView)
+        // Assign delegate of LibraryToggleViewDelegate
+        toggleView.delegate = self
+        
         // Set the delegate for the scrollview
         scrollView.delegate = self
         
@@ -91,5 +94,16 @@ extension LibraryViewController: UIScrollViewDelegate {
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         
     }
+}
+
+extension LibraryViewController: LibraryToggleViewDelegate {
+    func LibraryToggleViewDidTapPlaylists(_ toggleView: LibraryToggleView) {
+        // Scroll the view
+        scrollView.setContentOffset(.zero, animated: true)
+    }
     
+    func LibraryToggleViewDidTapAlbums(_ toggleView: LibraryToggleView) {
+        scrollView.setContentOffset(CGPoint(x: view.width, y: 0), animated: true)
+    }
+
 }
