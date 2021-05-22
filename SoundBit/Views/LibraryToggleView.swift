@@ -32,15 +32,25 @@ class LibraryToggleView: UIView {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
         button.setTitle("Albums", for: .normal)
-        
         return button
     }()
+    
+    // UIView indicatorView
+    private let indicatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGreen
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 4
+        return view
+        
+    }()
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(playlistButton)
         addSubview(albumsButton)
-        
+        addSubview(indicatorView)
         // Add target to the buttons
         playlistButton.addTarget(self,
                                  action: #selector(didTapPlaylists),
@@ -79,5 +89,12 @@ class LibraryToggleView: UIView {
             y: 0,
             width: 100,
             height: 50)
+        
+        // Layout frames
+        indicatorView.frame = CGRect(
+            x: 0,
+            y: playlistButton.bottom,
+            width: 100,
+            height: 3)
     }
 }
