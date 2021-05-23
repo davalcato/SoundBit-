@@ -79,7 +79,7 @@ final class APICaller {
         }
     }
     
-    public func getCurrentUserPlaylist(completion: @escaping(Result<[Playlist], Error>) -> Void) {
+    public func getCurrentUserPlaylists(completion: @escaping(Result<[Playlist], Error>) -> Void) {
         // Create a request
         createRequest(with: URL(string: Constants.baseAPIURL + "/me/playlists/?limit=50"),
                       type: .GET
@@ -93,8 +93,11 @@ final class APICaller {
                 // Decode the data back
                 do {
                     // JSON to dump the data
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(json)
+                    let result = try JSONDecoder().decode(LibraryPlaylistsResponse.self, from: data)
+                    completion(.success(result.items))
+                    
+//                        JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    print(result)
                 }
                 // Incase something goes wrong
                 catch {
