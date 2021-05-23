@@ -51,6 +51,7 @@ final class APICaller {
     }
     
     // MARK: Playlists
+    
     public func getPlaylistDetails(for playlist: Playlist, completion: @escaping (Result<PlaylistDetailsResponses, Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseAPIURL + "/playlists/" + playlist.id),
@@ -77,6 +78,58 @@ final class APICaller {
             task.resume()
         }
     }
+    
+    public func getCurrentUserPlaylist(completion: @escaping(Result<[Playlist], Error>) -> Void) {
+        // Create a request
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/playlists/?limit=50"),
+                      type: .GET
+        ) { request in
+            let task = URLSession.shared.dataTask(
+                with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                // Decode the data back
+                do {
+                    // JSON to dump the data
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(json)
+                }
+                // Incase something goes wrong
+                catch {
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+        
+    }
+    
+    public func createPlaylist(with name: String, completion: @escaping(Bool) -> Void) {
+        
+        
+    }
+    
+    public func addTrackToPlaylist(
+        track: AudioTrack,
+        playlist: Playlist,
+        completion: @escaping(Bool) -> Void
+    ) {
+        
+    }
+    
+    public func removeTrackFromPlaylist(
+        track: AudioTrack,
+        playlist: Playlist,
+        completion: @escaping(Bool) -> Void
+    
+    ) {
+        
+    }
+    
+    
     // MARK: Profile
     
     public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
