@@ -136,4 +136,12 @@ class LibraryToggleView: UIView {
              height: 3)
          }
     }
+    
+    // Update the state of the function
+    func update(for state: State) {
+        self.state = state
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIndicator()
+        }
+    }
 }

@@ -91,7 +91,14 @@ class LibraryViewController: UIViewController {
 }
 
 extension LibraryViewController: UIScrollViewDelegate {
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            // What the x offset is
+            if scrollView.contentOffset.x >= (view.width-100) {
+                toggleView.update(for: .album)
+            }
+            else {
+                toggleView.update(for: .playlist)
+            }
         
     }
 }
