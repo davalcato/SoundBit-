@@ -15,6 +15,14 @@ protocol LibraryToggleViewDelegate: AnyObject {
 }
 
 class LibraryToggleView: UIView {
+    // Tap to update the state
+    enum State {
+        case playlist
+        case album
+        
+    }
+    // Update the state
+    var state: State = .playlist
     
     // Weak reference to delegate
     weak var delegate: LibraryToggleViewDelegate?
@@ -66,11 +74,14 @@ class LibraryToggleView: UIView {
     }
     
     @objc private func didTapPlaylists() {
+        // Tap Playlist state
+        state = .playlist
         delegate?.LibraryToggleViewDidTapPlaylists(self)
         
     }
     
     @objc private func didTapAlbums() {
+        state = .album
         delegate?.LibraryToggleViewDidTapAlbums(self)
         
     }
@@ -82,19 +93,30 @@ class LibraryToggleView: UIView {
             x: 0,
             y: 0,
             width: 100,
-            height: 50)
+            height: 40)
         
         albumsButton.frame = CGRect(
             x: playlistButton.right,
             y: 0,
             width: 100,
-            height: 50)
-        
+            height: 40)
+       // Layout based on the state
+        switch state {
+        case .playlist:
         // Layout frames
         indicatorView.frame = CGRect(
             x: 0,
             y: playlistButton.bottom,
             width: 100,
             height: 3)
+        
+        case .album:
+        // Layout frames
+        indicatorView.frame = CGRect(
+            x: 100,
+            y: playlistButton.bottom,
+            width: 100,
+            height: 3)
+        }
     }
 }
