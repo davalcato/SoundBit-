@@ -111,8 +111,56 @@ final class APICaller {
     }
     
     public func createPlaylist(with name: String, completion: @escaping(Bool) -> Void) {
-        
-        
+        // Get the current user profile
+        getCurrentUserProfile { [weak self] result in
+            switch result {
+            case .success(let profile):
+                // Create the URL
+                let urlString = Constants.baseAPIURL + "/users/\(profile.id)/playlists"
+                // The other API call
+                self?.createRequest(with: URL(
+                                        string: urlString),
+                                    type: .POST) { baseRequest in
+                    // Mutable property
+                    var request = baseRequest
+                    
+                    // Create the JSON
+                    let json = [
+                        "name": name
+                    ]
+                    // Create a dictionary
+                    request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
+                    
+                   // Create a task
+                    let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                        guard let data = data, error == nil else {
+                            // This completion is false
+                            completion(false)
+                            return
+                        }
+                        do {
+                            // Get the JSON out
+                            let result = try JSONSerialization.jsonObject(
+                                with: data,
+                                options: .allowFragments)
+                            print(result)
+                        }
+                        // If something fails
+                        catch {
+                            // Print what went wrong
+                            print(error.localizedDescription)
+                            completion(false)
+                        }
+                    }
+                    task.resume()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                break
+            
+            }
+        }
     }
     
     public func addTrackToPlaylist(

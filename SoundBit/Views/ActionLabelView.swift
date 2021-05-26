@@ -29,6 +29,7 @@ class ActionLabelView: UIView {
         label.textAlignment = .center
         // Line wrap with 0
         label.numberOfLines = 0
+        label.textColor = .secondaryLabel
         return label
     }()
     // Button
@@ -42,7 +43,6 @@ class ActionLabelView: UIView {
    // Label button for updateUI
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         // No over flow
         clipsToBounds = true
         // Hidden by default
