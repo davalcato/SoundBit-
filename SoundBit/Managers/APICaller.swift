@@ -117,6 +117,8 @@ final class APICaller {
             case .success(let profile):
                 // Create the URL
                 let urlString = Constants.baseAPIURL + "/users/\(profile.id)/playlists"
+                // Add print statements
+                print(urlString)
                 // The other API call
                 self?.createRequest(with: URL(
                                         string: urlString),
@@ -130,7 +132,7 @@ final class APICaller {
                     ]
                     // Create a dictionary
                     request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
-                    
+                    print("Starting creation...")
                    // Create a task
                     let task = URLSession.shared.dataTask(with: request) { data, _, error in
                         guard let data = data, error == nil else {
@@ -143,11 +145,11 @@ final class APICaller {
                             let result = try JSONSerialization.jsonObject(
                                 with: data,
                                 options: .allowFragments)
-                            print(result)
+                            print("Created: \(result)")
                         }
                         // If something fails
                         catch {
-                            // Print what went wrong
+                            // Print out the error
                             print(error.localizedDescription)
                             completion(false)
                         }
