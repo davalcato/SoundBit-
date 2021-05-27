@@ -142,10 +142,14 @@ final class APICaller {
                         }
                         do {
                             // Get the JSON out
-                            let result = try JSONSerialization.jsonObject(
-                                with: data,
-                                options: .allowFragments)
+                            let result = try JSONDecoder().decode(Playlist.self, from: data)
+                                
+//                                JSONSerialization.jsonObject(
+//                                with: data,
+//                                options: .allowFragments)
+                            
                             print("Created: \(result)")
+                            completion(true)
                         }
                         // If something fails
                         catch {

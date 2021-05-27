@@ -46,7 +46,7 @@ class ActionLabelView: UIView {
         // No over flow
         clipsToBounds = true
         // Hidden by default
-        isHidden = false
+        isHidden = true
         // Add label & button as subviews
         addSubview(button)
         addSubview(label)

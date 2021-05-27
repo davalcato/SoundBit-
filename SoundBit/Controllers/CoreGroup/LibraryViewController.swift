@@ -43,6 +43,8 @@ class LibraryViewController: UIViewController {
         
         // Add children
         addChildren()
+        // Add a bar button playlist on Playlist not Album
+        updateBarButtons()
         
     }
     
@@ -60,6 +62,25 @@ class LibraryViewController: UIViewController {
             y: view.safeAreaInsets.top,
             width: 200,
             height: 55)
+    }
+    // Create updateBarButtons function
+    private func updateBarButtons() {
+        switch toggleView.state {
+        case .playlist:
+            // Show BarButton
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .add,
+                target: self,
+                action: #selector(didTapAdd))
+        case .album:
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    // Create the selector
+    @objc private func didTapAdd() {
+        // Call the function that shows the alert
+        playlistsVC.showCreatePlaylistAlert()
+        
     }
     
     // Implementing the children
@@ -95,9 +116,13 @@ extension LibraryViewController: UIScrollViewDelegate {
             // What the x offset is
             if scrollView.contentOffset.x >= (view.width-100) {
                 toggleView.update(for: .album)
+                // Call updateBarButton when the toggle changes
+                updateBarButtons()
             }
             else {
                 toggleView.update(for: .playlist)
+                // Update here
+                updateBarButtons()
             }
         
     }
@@ -107,10 +132,14 @@ extension LibraryViewController: LibraryToggleViewDelegate {
     func LibraryToggleViewDidTapPlaylists(_ toggleView: LibraryToggleView) {
         // Scroll the view
         scrollView.setContentOffset(.zero, animated: true)
+        // Update here
+        updateBarButtons()
     }
     
     func LibraryToggleViewDidTapAlbums(_ toggleView: LibraryToggleView) {
         scrollView.setContentOffset(CGPoint(x: view.width, y: 0), animated: true)
+        // Update here
+        updateBarButtons()
     }
 
 }
