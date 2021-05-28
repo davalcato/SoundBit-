@@ -18,7 +18,7 @@ class LibraryPlaylistsViewController: UIViewController {
     // Create an instance for a tableview
     private let tableView: UITableView = {
         // Cells register in tableView
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         // Register a cell
         tableView.register(SearchResultSubtitleTableViewCell.self,
                            forCellReuseIdentifier: SearchResultSubtitleTableViewCell.identifier)
