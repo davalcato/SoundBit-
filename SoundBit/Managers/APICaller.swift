@@ -174,10 +174,57 @@ final class APICaller {
     }
     
     public func addTrackToPlaylist(
+        // Pass in a track
         track: AudioTrack,
+        // Pass in a Playlist
         playlist: Playlist,
         completion: @escaping(Bool) -> Void
     ) {
+        // Create request
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/playlists/\(playlist.id)/tracks"),
+            type: .POST
+        ) { baseRequest in
+            // Mutable copy
+            var request = baseRequest
+            // Create JSON Body
+            let json = [
+                "uris": "spotify:track:\(track.id)"
+            ]
+            // Set httpBody
+            request.httpBody = try? JSONSerialization.data(
+                withJSONObject: json,
+                options: .fragmentsAllowed)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            // Kick request off
+            let task = URLSession.shared.dataTask(
+                with: request) { data, _, error in
+                // Unwrap the data
+                guard let data = data, error == nil else {
+                    // If any errors
+                    completion(false)
+                    return
+                }
+                
+                do {
+                    // decode result
+                    let result = try JSONSerialization.jsonObject(
+                        with: data,
+                        options: .allowFragments)
+                    if let response = result as? [String: Any], response["snapshot_id"] as? String != nil {
+                        // Call was successful
+                        completion(true)
+                        
+                    }
+                }
+                
+                catch {
+                    completion(false)
+                    
+                }
+            }
+            task .resume()
+        }
         
     }
     
