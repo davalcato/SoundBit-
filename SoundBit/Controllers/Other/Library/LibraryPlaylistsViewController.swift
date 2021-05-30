@@ -179,6 +179,19 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
                         imageURL: URL(string: playlist.images.first?.url ?? "")))
         return cell
     }
+    
+    // Delegate function for tableView
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        // Playlist collection
+        let playlist = playlists[indexPath.row]
+        // Open playlist - pass to reusable ViewController
+        let vc = PlaylistViewController(playlist: playlist)
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     // Change the height of the cells
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
