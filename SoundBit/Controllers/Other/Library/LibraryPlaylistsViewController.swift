@@ -136,9 +136,10 @@ class LibraryPlaylistsViewController: UIViewController {
                     return
                 }
                                 
-                                APICaller.shared.createPlaylist(with: text) { success in
+                                APICaller.shared.createPlaylist(with: text) { [weak self] success in
                                     if success {
                                         // Refresh the playlists
+                                        self!.fetchPlaylist()
                                     }
                                     else {
                                         
