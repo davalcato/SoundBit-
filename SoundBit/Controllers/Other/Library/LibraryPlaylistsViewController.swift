@@ -12,6 +12,9 @@ class LibraryPlaylistsViewController: UIViewController {
     // Create playlist for switch state
     var playlists = [Playlist]()
     
+    // Add closure of selectionHandler
+    public var selectionHandler: ((Playlist) -> Void)?
+    
     // Hold an instance on the controller
     private let noPlaylistsView = ActionLabelView()
     
@@ -42,6 +45,20 @@ class LibraryPlaylistsViewController: UIViewController {
         setUpNoPlaylistsView()
         // Make function
         fetchPlaylist()
+        
+        // Cancel barbutton selectionHandler
+        if selectionHandler != nil {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .close,
+                target: self,
+                action: #selector(didTapClose))
+        }
+        
+    }
+    
+    @objc func didTapClose() {
+        dismiss(animated: true, completion: nil)
+        
     }
     
     // Create frame
@@ -185,6 +202,14 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
         tableView.deselectRow(at: indexPath, animated: true)
         // Playlist collection
         let playlist = playlists[indexPath.row]
+        // Check if selectionHandler is set or not
+        guard selectionHandler == nil else {
+            // Pass in the playlist
+            selectionHandler?(playlist)
+            dismiss(animated: true, completion: nil)
+            return
+            
+        }
         // Open playlist - pass to reusable ViewController
         let vc = PlaylistViewController(playlist: playlist)
         vc.navigationItem.largeTitleDisplayMode = .never

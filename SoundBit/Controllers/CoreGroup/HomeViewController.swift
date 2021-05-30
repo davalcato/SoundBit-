@@ -29,7 +29,6 @@ enum BrowseSectionType {
 }
 
 class HomeViewController: UIViewController {
-    
     private var newAlbums: [Album] = []
     private var playlists: [Playlist] = []
     private var tracks: [AudioTrack] = []
@@ -59,8 +58,6 @@ class HomeViewController: UIViewController {
             target: self,
             action: #selector(didTapSettings)
         )
-        // Adding as a subview
-        view.addSubview(spinner)
         
         // Configuring the collectionView here
         configureCollectionView()
@@ -68,10 +65,67 @@ class HomeViewController: UIViewController {
         view.addSubview(spinner)
         // Calling the API from the HomeViewController
         fetchData()
+        // Long tap
+        addLongTapGesture()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
+    }
+    
+    // addLongTapGesture Function
+    private func addLongTapGesture() {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
+        collectionView.isUserInteractionEnabled = true
+        collectionView.addGestureRecognizer(gesture)
+    }
+    // Create #selector
+    @objc func didLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+        // If the user long press in the collection
+        let touchPoint = gesture.location(in: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: touchPoint),
+              // Guard section 2
+              indexPath.section == 2 else {
+            return
+        }
+        // Get the model
+        let model = tracks[indexPath.row]
+        //create actionsheet
+        let actionSheet = UIAlertController(
+            title: model.name,
+            message: "Would like to add this to a playlist?",
+            preferredStyle: .actionSheet
+        )
+        // Present actionSheets
+        actionSheet.addAction(UIAlertAction(
+                                title: "Cancel",
+                                style: .cancel,
+                                handler: nil))
+        
+        actionSheet.addAction(UIAlertAction(
+                                title: "Add to Playlist",
+                                style: .default,
+                                handler: { [weak self]_ in
+            // Main Thread
+                                    DispatchQueue.main.async {
+                                        // Pick which playlist
+                                          let vc = LibraryPlaylistsViewController()
+                                        // Pass it back to the caller - return playlist
+                                        vc.selectionHandler = { playlist in
+                                            
+                                            
+                                        }
+                                        vc.title = "Select Playlist"
+                                        // Present in NavigationController
+                                            self?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+              }
+                                    
+         }))
+        
+        present(actionSheet, animated: true)
     }
     
     
@@ -166,7 +220,7 @@ class HomeViewController: UIViewController {
                   let playlists = featuredPlaylist?.playlists.items,
                   let tracks = recommendations?.tracks else {
                 fatalError("Models are nil")
-                return
+               
                 }
             
             print("Configuring viewModels")
