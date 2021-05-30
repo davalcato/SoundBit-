@@ -245,6 +245,62 @@ final class APICaller {
         playlist: Playlist,
         completion: @escaping(Bool) -> Void
     ) {
+        // Create request
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/playlists/\(playlist.id)/tracks"),
+            type: .DELETE
+        ) { baseRequest in
+            // Mutable copy
+            var request = baseRequest
+            // Create JSON Body
+            let json = [
+                "tracks": [
+                    [
+                        "uri": "spotify:track:\(track.id)"
+                    ]
+                ]
+            ]
+            // Set httpBody
+            request.httpBody = try? JSONSerialization.data(
+                withJSONObject: json,
+                options: .fragmentsAllowed)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            // Kick request off
+            let task = URLSession.shared.dataTask(
+                with: request) { data, _, error in
+                // Unwrap the data
+                guard let data = data, error == nil else {
+                    // If any errors
+                    completion(false)
+                    return
+                }
+                
+                do {
+                    // decode result
+                    let result = try JSONSerialization.jsonObject(
+                        with: data,
+                        options: .allowFragments)
+                    // Print out request
+                    print(result)
+                    if let response = result as? [String: Any], response["snapshot_id"] as? String != nil {
+                        // Call was successful
+                        completion(true)
+                    }
+                    else {
+                        print(result)
+                        completion(false)
+                        
+                    }
+                }
+                
+                catch {
+                    completion(false)
+                    
+                }
+            }
+            task .resume()
+        }
         
     }
     // MARK: Profile
@@ -484,6 +540,7 @@ final class APICaller {
     enum HTTPMethod: String {
         case GET
         case POST
+        case DELETE
     }
     private func createRequest(
         with url: URL?,

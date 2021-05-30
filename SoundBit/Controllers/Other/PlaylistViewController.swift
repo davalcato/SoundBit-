@@ -11,6 +11,9 @@ class PlaylistViewController: UIViewController {
 
     private let playlist: Playlist
     
+    // Delete playlist from owner
+    public var isOwner = false
+    
     // CollectionView to render out compositionLayout
     private let collectionView = UICollectionView(
         frame: .zero,
@@ -102,8 +105,75 @@ class PlaylistViewController: UIViewController {
         // Add the share button at the top right
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .action,
-            target: self, action: #selector(didTapShare))
+            target: self, action: #selector(didTapShare)
+        )
+        
+        // Swipe to delete if owner
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_ :)))
+                                                   collectionView.addGestureRecognizer(gesture)
     }
+    
+    @objc private func didLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            
+            return
+        }
+        // Get the point of the given view
+        let touchPoint = gesture.location(in: collectionView)
+        // Get the actual indexPath
+        guard let indexPath = collectionView.indexPathForItem(at: touchPoint) else {
+            return
+        }
+        // Get track to delete if theirs an indexPath
+        let trackToDelete = tracks[indexPath.row]
+        
+        // Show alert actionsheet
+        let actionSheet = UIAlertController(
+            title: "Remove",
+            message: "Would you like to remove this from the playlist?",
+            preferredStyle: .actionSheet
+        )
+        // Cancel
+        actionSheet.addAction(UIAlertAction(
+                                title: "Cancel",
+                                style: .cancel,
+                                handler: nil))
+        
+        actionSheet.addAction(UIAlertAction(
+                                title: "Remove",
+                                style: .destructive,
+                                handler: { [weak self] _ in
+                                    guard let strongSelf = self else {
+                                        
+                                        return
+                                    }
+                                    // Once users taps on
+                                    APICaller.shared.removeTrackFromPlaylist(
+                                        track: trackToDelete,
+                                        playlist: strongSelf.playlist) { success in
+                                        // Main Thread
+                                        DispatchQueue.main.async {
+                                            if success {
+                                                print("Removed")
+                                            // Get rid of the track
+                                            strongSelf.tracks.remove(at: indexPath.row)
+                                            strongSelf.viewModels.remove(at: indexPath.row)
+                                            strongSelf.collectionView.reloadData()
+                                    }
+                                            else {
+                                                print("Failed to remove")
+                                                
+                                            }
+                                }
+                            }
+                        }
+                    )
+        )
+        
+        // Show actionsheet
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
     // Create share button
     @objc private func didTapShare() {
         guard let url = URL(string: playlist.external_urls["spotify"] ?? "") else {
@@ -162,7 +232,6 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
          header.delegate = self
     
         return header
-        
     }
     
     // Tap on cell here

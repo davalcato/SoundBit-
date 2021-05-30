@@ -213,9 +213,10 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
         // Open playlist - pass to reusable ViewController
         let vc = PlaylistViewController(playlist: playlist)
         vc.navigationItem.largeTitleDisplayMode = .never
+        // isOwner bool to swipe to delete playlist
+        vc.isOwner = true
         navigationController?.pushViewController(vc, animated: true)
     }
-    
     
     // Change the height of the cells
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
