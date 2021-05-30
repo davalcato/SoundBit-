@@ -115,8 +115,13 @@ class HomeViewController: UIViewController {
                                           let vc = LibraryPlaylistsViewController()
                                         // Pass it back to the caller - return playlist
                                         vc.selectionHandler = { playlist in
-                                            
-                                            
+                                        // Call APICaller to add to playlist
+                                            APICaller.shared.addTrackToPlaylist(
+                                                track: model,
+                                                playlist: playlist
+                                            ) { success in
+                                                print("Added to playlist success: \(success)")
+                                            }
                                         }
                                         vc.title = "Select Playlist"
                                         // Present in NavigationController

@@ -189,13 +189,19 @@ final class APICaller {
             var request = baseRequest
             // Create JSON Body
             let json = [
-                "uris": "spotify:track:\(track.id)"
+                "uris": [
+                    "spotify:track:\(track.id)"
+                ]
             ]
+            print(json)
             // Set httpBody
             request.httpBody = try? JSONSerialization.data(
                 withJSONObject: json,
                 options: .fragmentsAllowed)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            print("Adding...")
+            
+            
             // Kick request off
             let task = URLSession.shared.dataTask(
                 with: request) { data, _, error in
@@ -211,9 +217,15 @@ final class APICaller {
                     let result = try JSONSerialization.jsonObject(
                         with: data,
                         options: .allowFragments)
+                    // Print out request
+                    print(result)
                     if let response = result as? [String: Any], response["snapshot_id"] as? String != nil {
                         // Call was successful
                         completion(true)
+                    }
+                    else {
+                        print(result)
+                        completion(false)
                         
                     }
                 }
@@ -232,12 +244,9 @@ final class APICaller {
         track: AudioTrack,
         playlist: Playlist,
         completion: @escaping(Bool) -> Void
-    
     ) {
         
     }
-    
-    
     // MARK: Profile
     
     public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
