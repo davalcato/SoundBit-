@@ -178,4 +178,9 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
                         imageURL: URL(string: playlist.images.first?.url ?? "")))
         return cell
     }
+    // Change the height of the cells
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+        
+    }
 }
