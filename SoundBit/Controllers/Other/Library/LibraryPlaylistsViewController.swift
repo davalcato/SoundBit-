@@ -221,6 +221,5 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
     // Change the height of the cells
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
-        
     }
 }

@@ -50,6 +50,37 @@ final class APICaller {
         }
     }
     
+    // Create function for getCurrentUserAlbums
+    public func getCurrentUserAlbums(completion: @escaping (Result<[Album], Error>) -> Void) {
+        // Create request
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/me/albums"),
+            type: .GET
+        ) { request in
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                // Unwrapped the data
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(PlaylistDetailsResponses.self, from: data)
+//                        JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(result)
+//                    completion(.success(result))
+                }
+                catch {
+//                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+        
+    }
+    
     // MARK: Playlists
     
     public func getPlaylistDetails(for playlist: Playlist, completion: @escaping (Result<PlaylistDetailsResponses, Error>) -> Void) {
@@ -282,7 +313,7 @@ final class APICaller {
                         with: data,
                         options: .allowFragments)
                     // Print out request
-                    print(result)
+//                    print(result)
                     if let response = result as? [String: Any], response["snapshot_id"] as? String != nil {
                         // Call was successful
                         completion(true)

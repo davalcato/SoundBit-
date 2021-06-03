@@ -154,7 +154,7 @@ class PlaylistViewController: UIViewController {
                     // Main Thread
                     DispatchQueue.main.async {
                         if success {
-                            print("Removed")
+//                            print("Removed")
                             // Get rid of the track
                             strongSelf.tracks.remove(at: indexPath.row)
                             strongSelf.viewModels.remove(at: indexPath.row)
