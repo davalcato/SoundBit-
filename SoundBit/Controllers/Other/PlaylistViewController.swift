@@ -129,7 +129,7 @@ class PlaylistViewController: UIViewController {
         
         // Show alert actionsheet
         let actionSheet = UIAlertController(
-            title: "Remove",
+            title: trackToDelete.name,
             message: "Would you like to remove this from the playlist?",
             preferredStyle: .actionSheet
         )
@@ -140,30 +140,30 @@ class PlaylistViewController: UIViewController {
                                 handler: nil))
         
         actionSheet.addAction(UIAlertAction(
-                                title: "Remove",
-                                style: .destructive,
-                                handler: { [weak self] _ in
-                                    guard let strongSelf = self else {
-                                        
-                                        return
-                                    }
-                                    // Once users taps on
-                                    APICaller.shared.removeTrackFromPlaylist(
-                                        track: trackToDelete,
-                                        playlist: strongSelf.playlist) { success in
-                                        // Main Thread
-                                        DispatchQueue.main.async {
-                                            if success {
-                                                print("Removed")
-                                            // Get rid of the track
-                                            strongSelf.tracks.remove(at: indexPath.row)
-                                            strongSelf.viewModels.remove(at: indexPath.row)
-                                            strongSelf.collectionView.reloadData()
-                                    }
-                                            else {
-                                                print("Failed to remove")
+            title: "Remove",
+            style: .destructive,
+            handler: { [weak self] _ in
+                guard let strongSelf = self else {
+                    
+                    return
+                }
+                // Once users taps on
+                APICaller.shared.removeTrackFromPlaylist(
+                    track: trackToDelete,
+                    playlist: strongSelf.playlist) { success in
+                    // Main Thread
+                    DispatchQueue.main.async {
+                        if success {
+                            print("Removed")
+                            // Get rid of the track
+                            strongSelf.tracks.remove(at: indexPath.row)
+                            strongSelf.viewModels.remove(at: indexPath.row)
+                            strongSelf.collectionView.reloadData()
+                        }
+                        else {
+                            print("Failed to remove")
                                                 
-                                            }
+                                    }
                                 }
                             }
                         }
