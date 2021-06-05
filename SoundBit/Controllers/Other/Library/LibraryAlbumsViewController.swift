@@ -37,7 +37,8 @@ class LibraryAlbumsViewController: UIViewController {
             tableView.dataSource = self
             // Add as subview
             view.addSubview(tableView)
-            setUpNoPlaylistsView()
+            view.backgroundColor = .green
+            setUpNoAlbumsView()
             // Make function
             fetchPlaylist()
         }
@@ -55,13 +56,13 @@ class LibraryAlbumsViewController: UIViewController {
                 y: 0,
                 width: 150,
                 height: 150)
-            noAlbumsView.center = view.center
+//            noAlbumsView.center = view.center
             //Add frame for tableView playlist
-            tableView.frame = view.bounds
+//            tableView.frame = view.bounds
         }
         
         // Function setUpNoPlaylistsView
-        private func setUpNoPlaylistsView() {
+        private func setUpNoAlbumsView() {
             view.addSubview(noAlbumsView)
             noAlbumsView.delegate = self
             noAlbumsView.configure(
@@ -92,6 +93,7 @@ class LibraryAlbumsViewController: UIViewController {
         // Tableview list of updateUI
         private func updateUI() {
             if albums.isEmpty {
+                noAlbumsView.backgroundColor = .red
                 // Show label
                 noAlbumsView.isHidden = false
                 // tableView is hidden
@@ -99,7 +101,7 @@ class LibraryAlbumsViewController: UIViewController {
             }
             
             else {
-                // Show table playlist
+                // Reload tableView 
                 tableView.reloadData()
                 noAlbumsView.isHidden = true
                 tableView.isHidden = false
@@ -109,7 +111,7 @@ class LibraryAlbumsViewController: UIViewController {
     // To get the create button call on the ActionLabel
     extension LibraryAlbumsViewController: ActionLabelViewDelegate {
         func actionLabelViewDidTapButton(_ actionView: ActionLabelView) {
-           // User on third tab then switch tabs
+           // Switch the user back to the browse tab
             tabBarController?.selectedIndex = 0
         }
     }
@@ -129,7 +131,7 @@ class LibraryAlbumsViewController: UIViewController {
             let album = albums[indexPath.row]
             cell.configure(with: SearchResultSubtitleTableViewCellViewModel(
                             title: album.name,
-                            subtitle: album.artists.first?.name ?? "",
+                            subtitle: album.artists.first?.name ?? "-",
                             imageURL: URL(string: album.images.first?.url ?? "")))
             return cell
         }

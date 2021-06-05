@@ -57,7 +57,6 @@ final class APICaller {
             with: URL(string: Constants.baseAPIURL + "/me/albums"),
             type: .GET
         ) { request in
-            
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 // Unwrapped the data
                 guard let data = data, error == nil else {
@@ -66,10 +65,11 @@ final class APICaller {
                 }
                 
                 do {
-                    let result = try JSONDecoder().decode(PlaylistDetailsResponses.self, from: data)
+                    let result = try JSONDecoder().decode(LibraryAlbumsResponse.self, from: data)
 //                        JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     print(result)
-//                    completion(.success(result))
+                    // Array of albums 
+                    completion(.success(result.items))
                 }
                 catch {
 //                    print(error)
