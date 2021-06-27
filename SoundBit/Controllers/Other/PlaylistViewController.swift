@@ -114,6 +114,7 @@ class PlaylistViewController: UIViewController {
     }
     
     @objc private func didLongPress(_ gesture: UILongPressGestureRecognizer) {
+        //  Guard state is began
         guard gesture.state == .began else {
             
             return
@@ -135,9 +136,9 @@ class PlaylistViewController: UIViewController {
         )
         // Cancel
         actionSheet.addAction(UIAlertAction(
-                                title: "Cancel",
-                                style: .cancel,
-                                handler: nil))
+            title: "Cancel",
+            style: .cancel,
+            handler: nil))
         
         actionSheet.addAction(UIAlertAction(
             title: "Remove",
@@ -167,8 +168,7 @@ class PlaylistViewController: UIViewController {
                                 }
                             }
                         }
-                    )
-        )
+                    ))
         
         // Show actionsheet
         present(actionSheet, animated: true, completion: nil)

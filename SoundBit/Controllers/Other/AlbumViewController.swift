@@ -78,7 +78,7 @@ class AlbumViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        // As soon as Viewcontroller is called started fetching data
+        // As soon as Viewcontroller is called start fetching data
         APICaller.shared.getAlbumDetails(for: album) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {

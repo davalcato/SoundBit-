@@ -11,21 +11,19 @@ class LibraryAlbumsViewController: UIViewController {
     
         // Array of Album objects user saved
         var albums = [Album]()
-    
         // Hold an instance on the controller
         private let noAlbumsView = ActionLabelView()
-        
         // Create an instance for a tableview
         private let tableView: UITableView = {
             // Cells register in tableView
             let tableView = UITableView(frame: .zero, style: .grouped)
             // Register a cell
-            tableView.register(SearchResultSubtitleTableViewCell.self,
-                               forCellReuseIdentifier: SearchResultSubtitleTableViewCell.identifier)
+            tableView.register(
+                SearchResultSubtitleTableViewCell.self,
+                forCellReuseIdentifier: SearchResultSubtitleTableViewCell.identifier)
             // TableView hidden
             tableView.isHidden = true
             return tableView
-            
         }()
 
         override func viewDidLoad() {
@@ -45,23 +43,22 @@ class LibraryAlbumsViewController: UIViewController {
         
         @objc func didTapClose() {
             dismiss(animated: true, completion: nil)
-            
         }
         
         // Create frame
         override func viewDidLayoutSubviews() {
             super.viewDidLayoutSubviews()
+            // Center the view
             noAlbumsView.frame = CGRect(
-                x: 0,
-                y: 0,
+                x: (view.width-150)/2,
+                y: (view.height-150)/2,
                 width: 150,
                 height: 150)
 //            noAlbumsView.center = view.center
             //Add frame for tableView playlist
-//            tableView.frame = view.bounds
+            tableView.frame = view.bounds
         }
-        
-        // Function setUpNoPlaylistsView
+        // Function
         private func setUpNoAlbumsView() {
             view.addSubview(noAlbumsView)
             noAlbumsView.delegate = self
@@ -84,7 +81,7 @@ class LibraryAlbumsViewController: UIViewController {
                         self?.albums = albums
                         self?.updateUI()
                     case .failure(let error):
-                        print(error.localizedDescription)
+                        print("JSON Error: \(error)")
                     }
                 }
             }
@@ -127,7 +124,7 @@ class LibraryAlbumsViewController: UIViewController {
             ) as? SearchResultSubtitleTableViewCell else {
                 return UITableViewCell()
             }
-            // Get playlist at given position
+            // Get int album out of playlist
             let album = albums[indexPath.row]
             cell.configure(with: SearchResultSubtitleTableViewCellViewModel(
                             title: album.name,
@@ -135,18 +132,16 @@ class LibraryAlbumsViewController: UIViewController {
                             imageURL: URL(string: album.images.first?.url ?? "")))
             return cell
         }
-        
-        // Delegate function for tableView
+        // Select album
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
             // When user selects albums
             let album = albums[indexPath.row]
-            // Reusable ViewController
+            // Passing in the album model from above
             let vc = AlbumViewController(album: album)
             vc.navigationItem.largeTitleDisplayMode = .never
             navigationController?.pushViewController(vc, animated: true)
         }
-        
         // Change the height of the cells
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 70

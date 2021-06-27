@@ -54,7 +54,7 @@ final class APICaller {
     public func getCurrentUserAlbums(completion: @escaping (Result<[Album], Error>) -> Void) {
         // Create request
         createRequest(
-            with: URL(string: Constants.baseAPIURL + "/me/albums"),
+            with: URL(string: Constants.baseAPIURL + "/v1/me/albums"),
             type: .GET
         ) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -78,9 +78,35 @@ final class APICaller {
             }
             task.resume()
         }
-        
     }
     
+    // Save album API
+    public func saveAlbum(album: Album, completion: @escaping (Bool) -> Void) {
+        // Create request
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/me/albums?ids=\(album.id)"),
+            type: .PUT) { baseRequest in
+            var request = baseRequest
+            request.setValue("application/json",
+                             forHTTPHeaderField: "Content-Type")
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                // Unwrapped the data
+                guard let data = data,
+                      let code = (response as? HTTPURLResponse)?.statusCode,
+                        error == nil else {
+                    completion(false)
+                    return
+                }
+                // Response status code
+                print(code)
+                    completion(code == 201)
+            }
+            
+            task.resume()
+        }
+        
+    }
     // MARK: Playlists
     
     public func getPlaylistDetails(for playlist: Playlist, completion: @escaping (Result<PlaylistDetailsResponses, Error>) -> Void) {
@@ -257,7 +283,6 @@ final class APICaller {
                     else {
                         print(result)
                         completion(false)
-                        
                     }
                 }
                 
@@ -268,7 +293,6 @@ final class APICaller {
             }
             task .resume()
         }
-        
     }
     
     public func removeTrackFromPlaylist(
@@ -296,7 +320,6 @@ final class APICaller {
                 withJSONObject: json,
                 options: .fragmentsAllowed)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
             // Kick request off
             let task = URLSession.shared.dataTask(
                 with: request) { data, _, error in
@@ -319,15 +342,13 @@ final class APICaller {
                         completion(true)
                     }
                     else {
-                        print(result)
+//                        print(result)
                         completion(false)
-                        
                     }
                 }
                 
                 catch {
                     completion(false)
-                    
                 }
             }
             task .resume()
@@ -570,6 +591,7 @@ final class APICaller {
     
     enum HTTPMethod: String {
         case GET
+        case PUT
         case POST
         case DELETE
     }
